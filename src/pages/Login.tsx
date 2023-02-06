@@ -1,19 +1,25 @@
-import { useContext, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { ApolloError } from '@apollo/client'
+import { useState } from 'react'
 
-import AuthContext from '../contexts/auth'
+import { useAuth } from '../contexts/auth'
 
 const Login = () => {
-  const [email, setEmail] = useState('lara@gmail.com')
-  const [password, setPassword] = useState('321')
+  const [email, setEmail] = useState('ramonzin@gmail.com')
+  const [password, setPassword] = useState('123')
   const [error, setError] = useState('')
 
-  const { handleLogin: login } = useContext(AuthContext)
+  const { handleLogin: login } = useAuth()
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    await login(email, password)
+    try {
+      await login(email, password)
+    } catch (error) {
+      if (error instanceof ApolloError) {
+        setError(error.message)
+      }
+    }
   }
 
   return (
@@ -36,8 +42,6 @@ const Login = () => {
       </form>
 
       {error && <span>{error}</span>}
-
-      <Link to="/register">I don{"'"}t have an account</Link>
     </div>
   )
 }

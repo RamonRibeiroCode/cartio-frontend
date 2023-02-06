@@ -30,6 +30,7 @@
     "react-hooks/exhaustive-deps": "warn",
 
     "import/no-unresolved": "off",
+    "import/named": "off",
     "import/order": [
       "warn",
       {

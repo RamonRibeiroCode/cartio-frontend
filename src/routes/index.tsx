@@ -1,11 +1,9 @@
-import { useContext } from 'react'
-
 import AuthRoutes from './auth.routes'
 import SignedRoutes from './signed.routes'
-import AuthContext from '../contexts/auth.jsx'
+import { useAuth } from '../contexts/auth.jsx'
 
 const Routes = () => {
-  const { signed } = useContext(AuthContext)
+  const { signed } = useAuth()
 
   return signed ? <SignedRoutes /> : <AuthRoutes />
 }

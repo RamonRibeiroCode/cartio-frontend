@@ -8,7 +8,18 @@ import {
   useCallback,
 } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { gql, useMutation } from '@apollo/client'
 
+import { SigninInput, SigninResponse } from '../__generated__/graphql'
+
+const SIGNIN = gql`
+  mutation SIGNIN($email: String!, $password: String!) {
+    signin(email: $email, password: $password) {
+      email
+      token
+    }
+  }
+`
 interface AuthContext {
   signed: boolean
   loading: boolean
@@ -32,19 +43,27 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [signed, setSigned] = useState(false)
   const [loading, setLoading] = useState(false)
   const [user, setUser] = useState({} as User)
+  const [signin] = useMutation<SigninResponse, SigninInput>(SIGNIN)
 
   const navigate = useNavigate()
 
   const handleLogin = useCallback(
     async (email: string, password: string) => {
-      email
-      password
-      // const user = await login(email, password);
+      const response = await signin({ variables: { email, password } })
+
+      if (!response.data) {
+        return
+      }
+
+      const user = {
+        email: response.data?.email,
+        name: response.data?.name,
+      }
 
       setSigned(true)
       setUser(user)
     },
-    [user]
+    [signin]
   )
 
   const handleLogout = useCallback(() => {
