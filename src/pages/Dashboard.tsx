@@ -1,12 +1,10 @@
-import { Header } from '../components/common/Header'
+import Layout from '../components/common/Layout'
 
-const Dashboard = () => {
+function Dashboard() {
   return (
-    <div>
-      <Header />
-
+    <Layout>
       <h1>Dashboard</h1>
-    </div>
+    </Layout>
   )
 }
 

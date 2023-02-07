@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Icon from '../components/ui/Icon'
 import { useAuth } from '../contexts/auth'
 
-const Login = () => {
+function Login() {
   const [email, setEmail] = useState('ramonzin@gmail.com')
   const [password, setPassword] = useState('123')
   const [error, setError] = useState('')

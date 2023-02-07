@@ -1,7 +1,7 @@
 import { gql, useQuery } from '@apollo/client'
 
-import { useAuth } from '../../contexts/auth'
-import { UserWithoutPassword } from '../../__generated__/graphql'
+import { useAuth } from '../../../contexts/auth'
+import { UserWithoutPassword } from '../../../__generated__/graphql'
 
 const PROFILE = gql`
   query PROFILE {
@@ -15,14 +15,14 @@ interface ProfileQuery {
   profile: UserWithoutPassword
 }
 
-const Header = () => {
+function Header() {
   const { user, handleLogout } = useAuth()
   const { data } = useQuery<ProfileQuery>(PROFILE)
 
   console.log(data?.profile.__typename)
 
   return (
-    <header>
+    <header className="h-20 border-b border-red-600">
       <span>{user.email}</span>
 
       <span>{user.name}</span>
@@ -32,4 +32,4 @@ const Header = () => {
   )
 }
 
-export { Header }
+export default Header
