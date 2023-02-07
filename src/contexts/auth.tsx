@@ -105,6 +105,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
       if (storagedUser && storagedToken) {
         setAuthApolloClient(storagedToken)
+
         const storagedUserParsed = JSON.parse(storagedUser)
 
         setUser(storagedUserParsed)

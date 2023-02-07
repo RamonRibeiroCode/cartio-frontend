@@ -8,3 +8,6 @@ coverage/
 @generated
 src/__generated__
 src/typings/
+
+postcss.config.js
+tailwind.config.js
