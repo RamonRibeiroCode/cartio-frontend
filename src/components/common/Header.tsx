@@ -1,7 +1,7 @@
 import { gql, useQuery } from '@apollo/client'
 
-import { useAuth } from '../contexts/auth'
-import { UserWithoutPassword } from '../__generated__/graphql'
+import { useAuth } from '../../contexts/auth'
+import { UserWithoutPassword } from '../../__generated__/graphql'
 
 const PROFILE = gql`
   query PROFILE {

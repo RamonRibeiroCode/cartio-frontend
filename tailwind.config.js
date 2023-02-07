@@ -3,6 +3,9 @@ module.exports = {
   content: ['./src/pages/**/*.{ts,tsx}', './src/components/**/*.{ts,tsx}'],
   theme: {
     extend: {
+      fontFamily: {
+        sans: 'Poppins',
+      },
       screens: {
         '3xs': '280px',
         '2xs': '320px',
