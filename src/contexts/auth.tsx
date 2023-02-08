@@ -9,15 +9,15 @@ import {
 } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { gql, useMutation } from '@apollo/client'
-import { setContext } from '@apollo/client/link/context'
 
 import { SigninInput, SigninResponse } from '../__generated__/graphql'
-import { client, httpLink } from '../lib/apollo'
+import { setAuthApolloClient } from '../lib/apollo'
 
 const SIGNIN = gql`
   mutation SIGNIN($email: String!, $password: String!) {
     signin(email: $email, password: $password) {
       email
+      name
       token
     }
   }
@@ -53,19 +53,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const navigate = useNavigate()
 
-  const setAuthApolloClient = (token: string) => {
-    const authLink = setContext((_, { headers }) => {
-      return {
-        headers: {
-          ...headers,
-          authorization: token ? `Bearer ${token}` : '',
-        },
-      }
-    })
-
-    client.setLink(authLink.concat(httpLink))
-  }
-
   const handleLogin = useCallback(
     async (email: string, password: string) => {
       const response = await signin({ variables: { email, password } })
@@ -78,6 +65,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         email: response.data?.signin.email,
         name: response.data?.signin.name,
       }
+
+      console.log(response.data?.signin)
 
       localStorage.setItem('cartio:user', JSON.stringify(user))
       localStorage.setItem('cartio:token', response.data.signin.token)
@@ -104,8 +93,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const storagedToken = localStorage.getItem('cartio:token')
 
       if (storagedUser && storagedToken) {
-        setAuthApolloClient(storagedToken)
-
         const storagedUserParsed = JSON.parse(storagedUser)
 
         setUser(storagedUserParsed)

@@ -65,7 +65,7 @@ function SideBar() {
               <li
                 key={link.name}
                 className={`w-full rounded-lg mb-2 ${
-                  active ? 'h-14 bg-primary-100' : ''
+                  active ? 'h-14 bg-primary-100' : 'hover:bg-primary-10'
                 } `}
               >
                 <Link
@@ -97,7 +97,7 @@ function SideBar() {
       </nav>
 
       <button
-        className={`flex items-center w-full h-14 px-4 rounded-lg ${
+        className={`flex items-center w-full h-14 px-4 rounded-lg hover:bg-primary-10 ${
           collapsed ? 'justify-center' : 'px-4'
         }`}
         onClick={() => setCollapsed((prevCollapsed) => !prevCollapsed)}
