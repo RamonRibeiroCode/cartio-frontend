@@ -3,13 +3,23 @@ module.exports = {
   content: ['./src/pages/**/*.{ts,tsx}', './src/components/**/*.{ts,tsx}'],
   theme: {
     extend: {
-      fontFamily: {
-        sans: 'Poppins',
-      },
       screens: {
         '3xs': '280px',
         '2xs': '320px',
         xs: '360px',
+      },
+      fontFamily: {
+        sans: 'Poppins',
+      },
+      fontSize: {
+        'sub-heading-1': ['32px', '48px'],
+        'sub-heading-2': ['28px', '42px'],
+        'sub-heading-3': ['20px', '30px'],
+        'paragraph-1': ['16px', '20px'],
+        'paragraph-2': ['14px', '17px'],
+        'label-1': ['12px', '14.5px'],
+        'label-2': ['11px', '13.3px'],
+        'label-3': ['10px', '12px'],
       },
       colors: {
         primary: {

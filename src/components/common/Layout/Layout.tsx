@@ -4,18 +4,19 @@ import Header from '../Header'
 import SideBar from '../SideBar'
 
 interface LayoutProps {
+  label: string
   children: ReactNode
 }
 
-function Layout({ children }: LayoutProps) {
+function Layout({ label, children }: LayoutProps) {
   return (
     <div className="flex min-h-screen">
       <SideBar />
 
       <div className="flex flex-col flex-1">
-        <Header />
+        <Header label={label} />
 
-        <main className="flex-1 bg-[#F4F5FA]">{children}</main>
+        <main className="flex-1 bg-[#F4F5FA] p-5">{children}</main>
       </div>
     </div>
   )
