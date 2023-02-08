@@ -1,3 +1,5 @@
+import { BrowserRouter } from 'react-router-dom'
+
 import AuthRoutes from './auth.routes'
 import SignedRoutes from './signed.routes'
 import { useAuth } from '../contexts/auth.jsx'

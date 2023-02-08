@@ -22,7 +22,7 @@ const SIGNIN = gql`
     }
   }
 `
-interface AuthContext {
+interface AuthContextValues {
   signed: boolean
   loading: boolean
   user: User
@@ -43,7 +43,7 @@ interface SigninQuery {
   signin: SigninResponse
 }
 
-const AuthContext = createContext({} as AuthContext)
+const AuthContext = createContext({} as AuthContextValues)
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [signed, setSigned] = useState(false)

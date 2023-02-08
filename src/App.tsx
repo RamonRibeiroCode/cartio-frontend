@@ -2,20 +2,22 @@ import { BrowserRouter } from 'react-router-dom'
 import { ApolloProvider } from '@apollo/client'
 
 import Routes from './routes'
-import { AuthProvider } from './contexts/auth'
 import { client } from './lib/apollo'
-
+import { SideBarProvider } from './contexts/sidebar'
+import { AuthProvider } from './contexts/auth'
 import './App.css'
 
 const App = () => {
   return (
-    <ApolloProvider client={client}>
-      <BrowserRouter>
-        <AuthProvider>
-          <Routes />
-        </AuthProvider>
-      </BrowserRouter>
-    </ApolloProvider>
+    <BrowserRouter>
+      <ApolloProvider client={client}>
+        <SideBarProvider>
+          <AuthProvider>
+            <Routes />
+          </AuthProvider>
+        </SideBarProvider>
+      </ApolloProvider>
+    </BrowserRouter>
   )
 }
 

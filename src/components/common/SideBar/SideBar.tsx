@@ -1,7 +1,7 @@
-import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 import { useAuth } from '../../../contexts/auth'
+import { useSidebar } from '../../../contexts/sidebar'
 import Icon from '../../ui/Icon'
 
 const links = [
@@ -32,7 +32,7 @@ const links = [
 ]
 
 function SideBar() {
-  const [collapsed, setCollapsed] = useState(false)
+  const { collapsed, setCollapsed } = useSidebar()
   const location = useLocation()
   const { handleLogout } = useAuth()
 
