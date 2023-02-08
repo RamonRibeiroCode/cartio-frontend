@@ -2,6 +2,7 @@ import { ApolloError } from '@apollo/client'
 import { useState } from 'react'
 
 import Icon from '../components/ui/Icon'
+import Input from '../components/ui/Input'
 import { useAuth } from '../contexts/auth'
 
 function Login() {
@@ -41,46 +42,29 @@ function Login() {
             className="flex flex-col items-center w-full mt-16"
             onSubmit={handleLogin}
           >
-            <div className="relative flex items-center w-full h-[52px] bg-[#eff1f999] rounded-lg mb-8">
-              <Icon
-                name="Mail"
-                width={22}
-                height={20}
-                className="absolute left-[18px]"
-              />
+            <Input
+              wrapperClassName="mb-8"
+              type="text"
+              placeholder="Email Address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              icon="Mail"
+            />
 
-              <input
-                className="w-full h-full bg-transparent outline-primary-10 text-base text-[#ABAFB1] pr-[18px] pl-14"
-                type="text"
-                value={email}
-                placeholder="Email Address"
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-
-            <div className="relative flex items-center w-full h-[52px] bg-[#eff1f999] rounded-lg">
-              <Icon
-                name="Password"
-                width={18}
-                height={20}
-                className="absolute left-[18px]"
-              />
-
-              <input
-                className="w-full h-full bg-transparent outline-primary-10 text-base text-[#ABAFB1] pr-[18px] pl-14"
-                type="text"
-                value={password}
-                placeholder="Password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
+            <Input
+              type="text"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              icon="Password"
+            />
 
             {error && (
               <span className="text-action-red text-sm mt-4">{error}</span>
             )}
 
             <button
-              className="flex justify-center items-center w-full max-w-[180px] bg-primary-100 rounded-xl outline-primary-10 mt-12 py-4 text-xl text-white hover:bg-primary-80"
+              className="flex justify-center items-center w-full max-w-[180px] h-14 bg-primary-100 rounded-xl outline-primary-10 mt-12 py-4 text-lg text-white hover:bg-primary-80"
               type="submit"
             >
               Login

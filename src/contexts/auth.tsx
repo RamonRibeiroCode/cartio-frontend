@@ -66,8 +66,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         name: response.data?.signin.name,
       }
 
-      console.log(response.data?.signin)
-
       localStorage.setItem('cartio:user', JSON.stringify(user))
       localStorage.setItem('cartio:token', response.data.signin.token)
 
