@@ -6,7 +6,7 @@ import Input from '../components/ui/Input'
 import { useAuth } from '../contexts/auth'
 
 function Login() {
-  const [email, setEmail] = useState('ramonzin@gmail.com')
+  const [email, setEmail] = useState('ramonribeiro1200@gmail.com')
   const [password, setPassword] = useState('123')
   const [error, setError] = useState('')
 

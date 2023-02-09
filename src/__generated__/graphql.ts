@@ -23,6 +23,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createUser: UserWithoutPassword;
   signin: SigninResponse;
+  updateUser: UserWithoutPassword;
 };
 
 
@@ -32,18 +33,19 @@ export type MutationCreateUserArgs = {
 
 
 export type MutationSigninArgs = {
-  signinInput: SigninInput;
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
+
+export type MutationUpdateUserArgs = {
+  updateUserInput: UpdateUserInput;
 };
 
 export type Query = {
   __typename?: 'Query';
   profile: UserWithoutPassword;
   sayHello: Scalars['String'];
-};
-
-export type SigninInput = {
-  email: Scalars['String'];
-  password: Scalars['String'];
 };
 
 export type SigninResponse = {
@@ -53,8 +55,20 @@ export type SigninResponse = {
   token: Scalars['String'];
 };
 
+export type UpdateUserInput = {
+  address?: InputMaybe<Scalars['String']>;
+  city?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  phone?: InputMaybe<Scalars['String']>;
+  state?: InputMaybe<Scalars['String']>;
+};
+
 export type UserWithoutPassword = {
   __typename?: 'UserWithoutPassword';
+  address?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
   email: Scalars['String'];
   name: Scalars['String'];
+  phone?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
 };

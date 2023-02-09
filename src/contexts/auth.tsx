@@ -10,7 +10,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { gql, useMutation } from '@apollo/client'
 
-import { SigninInput, SigninResponse } from '../__generated__/graphql'
+import { MutationSigninArgs, SigninResponse } from '../__generated__/graphql'
 import { setAuthApolloClient } from '../lib/apollo'
 
 const SIGNIN = gql`
@@ -28,6 +28,7 @@ interface AuthContextValues {
   user: User
   handleLogin: (email: string, password: string) => Promise<void>
   handleLogout: () => void
+  handleUpdateUserAuthenticated: (email: string, password: string) => void
 }
 
 interface User {
@@ -49,9 +50,20 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [signed, setSigned] = useState(false)
   const [loading, setLoading] = useState(false)
   const [user, setUser] = useState({} as User)
-  const [signin] = useMutation<SigninQuery, SigninInput>(SIGNIN)
+  const [signin] = useMutation<SigninQuery, MutationSigninArgs>(SIGNIN)
 
   const navigate = useNavigate()
+
+  const handleUpdateUserAuthenticated = (email: string, name: string) => {
+    const user = {
+      email,
+      name,
+    }
+
+    localStorage.setItem('cartio:user', JSON.stringify(user))
+
+    setUser(user)
+  }
 
   const handleLogin = useCallback(
     async (email: string, password: string) => {
@@ -61,19 +73,17 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         return
       }
 
-      const user = {
-        email: response.data?.signin.email,
-        name: response.data?.signin.name,
-      }
-
       localStorage.setItem('cartio:user', JSON.stringify(user))
       localStorage.setItem('cartio:token', response.data.signin.token)
 
+      handleUpdateUserAuthenticated(
+        response.data.signin.email,
+        response.data.signin.name
+      )
       setAuthApolloClient(response.data.signin.token)
       setSigned(true)
-      setUser(user)
     },
-    [signin]
+    [signin, user]
   )
 
   const handleLogout = useCallback(() => {
@@ -110,6 +120,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       user,
       handleLogin,
       handleLogout,
+      handleUpdateUserAuthenticated,
     }),
     [handleLogin, handleLogout, loading, signed, user]
   )

@@ -1,17 +1,37 @@
-import { useEffect, useState } from 'react'
-import { gql, useQuery } from '@apollo/client'
+import { FormEvent, useEffect, useReducer, useState } from 'react'
+import { gql, useMutation, useQuery } from '@apollo/client'
 import * as Tabs from '@radix-ui/react-tabs'
 
 import Layout from '../components/common/Layout'
-import { UserWithoutPassword } from '../__generated__/graphql'
 import Input from '../components/ui/Input'
 import Profile from '../assets/settings-profile.png'
+import {
+  UserWithoutPassword,
+  MutationUpdateUserArgs,
+} from '../__generated__/graphql'
+import { useAuth } from '../contexts/auth'
 
 const PROFILE = gql`
   query PROFILE {
     profile {
       email
       name
+      phone
+      address
+      state
+      city
+    }
+  }
+`
+const UPDATE_USER = gql`
+  mutation UPDATE_USER($updateUserInput: UpdateUserInput!) {
+    updateUser(updateUserInput: $updateUserInput) {
+      email
+      name
+      address
+      phone
+      state
+      city
     }
   }
 `
@@ -20,14 +40,120 @@ interface ProfileQuery {
   profile: UserWithoutPassword
 }
 
+interface UpdateUserQuery {
+  updateuser: UserWithoutPassword
+}
+
+interface Action {
+  type:
+    | 'SET_INITIAL_PROFILE'
+    | 'UPDATE_NAME'
+    | 'UPDATE_EMAIL'
+    | 'UPDATE_PHONE'
+    | 'UPDATE_ADDRESS'
+    | 'UPDATE_STATE'
+    | 'UPDATE_CITY'
+  payload: ProfileType | string
+}
+
+interface ProfileType {
+  name: string
+  email: string
+  phone: string
+  address: string
+  state: string
+  city: string
+}
+
+const reducer = (state: ProfileType, action: Action) => {
+  switch (action.type) {
+    case 'SET_INITIAL_PROFILE':
+      return { ...(action.payload as ProfileType) }
+
+    case 'UPDATE_NAME':
+      return { ...state, name: action.payload as string }
+
+    case 'UPDATE_EMAIL':
+      return { ...state, email: action.payload as string }
+
+    case 'UPDATE_PHONE':
+      return { ...state, phone: action.payload as string }
+
+    case 'UPDATE_ADDRESS':
+      return { ...state, address: action.payload as string }
+
+    case 'UPDATE_STATE':
+      return { ...state, state: action.payload as string }
+
+    case 'UPDATE_CITY':
+      return { ...state, city: action.payload as string }
+
+    default:
+      return state
+  }
+}
+
+const initialState = {
+  name: '',
+  email: '',
+  phone: '',
+  address: '',
+  state: '',
+  city: '',
+}
+
 function Settings() {
   const { data } = useQuery<ProfileQuery>(PROFILE)
-  const [name, setName] = useState(data?.profile.name ?? '')
+  const [updateUser] = useMutation<UpdateUserQuery, MutationUpdateUserArgs>(
+    UPDATE_USER
+  )
+  const { handleUpdateUserAuthenticated } = useAuth()
+
   const [editing, setEditing] = useState(false)
+  const [storedProfile, setStoredProfile] = useState({} as ProfileType)
+  const [state, dispatch] = useReducer(reducer, { ...initialState })
+
+  const handleCancelUpdate = () => {
+    dispatch({ type: 'SET_INITIAL_PROFILE', payload: storedProfile })
+  }
+
+  const handleUpdateProfile = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    setEditing(false)
+    setStoredProfile(state)
+
+    const userToUpdate = {
+      ...state,
+      email: undefined,
+    }
+
+    updateUser({ variables: { updateUserInput: userToUpdate } })
+
+    if (state.name !== storedProfile.name) {
+      handleUpdateUserAuthenticated(state.email, state.name)
+    }
+  }
+
+  const verifyIfStoredProfileIsEqualToEditedProfile = () => {
+    return JSON.stringify(storedProfile) === JSON.stringify(state)
+  }
 
   useEffect(() => {
     if (data) {
-      setName(data.profile.name)
+      const { name, email, address, phone, state, city } = data.profile
+
+      const profile: ProfileType = {
+        name,
+        email,
+        phone: phone ?? '',
+        address: address ?? '',
+        state: state ?? '',
+        city: city ?? '',
+      }
+
+      setStoredProfile(profile)
+      dispatch({ type: 'SET_INITIAL_PROFILE', payload: profile })
     }
   }, [data])
 
@@ -67,88 +193,121 @@ function Settings() {
                     : 'bg-primary-100 hover:bg-primary-80'
                 }`}
                 type="submit"
-                onClick={() => setEditing(!editing)}
+                onClick={() => {
+                  editing && handleCancelUpdate()
+
+                  setEditing(!editing)
+                }}
               >
                 {editing ? 'Cancel' : 'Edit'}
               </button>
             </div>
 
             <div className="flex">
-              <form className="flex flex-col w-full max-w-md" action="">
+              <form
+                className="flex flex-col w-full max-w-md"
+                onSubmit={handleUpdateProfile}
+              >
+                <Input
+                  type="text"
+                  placeholder="Email"
+                  icon="Mail"
+                  inputClassName="disabled:opacity-60"
+                  label="Email *"
+                  wrapperClassName="mb-4"
+                  disabled
+                  value={state.email}
+                  onChange={(e) =>
+                    dispatch({ type: 'UPDATE_EMAIL', payload: e.target.value })
+                  }
+                />
+
                 <Input
                   type="text"
                   placeholder="Full Name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
                   icon="Profile"
                   inputClassName="disabled:opacity-60"
                   label="Full Name *"
                   wrapperClassName="mb-4"
                   disabled={!editing}
-                />
-
-                <Input
-                  type="text"
-                  placeholder="Email"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  icon="Mail"
-                  inputClassName="disabled:opacity-60"
-                  label="Email *"
-                  wrapperClassName="mb-4"
-                  disabled={!editing}
+                  value={state.name}
+                  onChange={(e) =>
+                    dispatch({ type: 'UPDATE_NAME', payload: e.target.value })
+                  }
                 />
 
                 <Input
                   type="text"
                   inputClassName="disabled:opacity-60"
                   placeholder="Phone Number"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
                   icon="Phone"
                   label="Phone Number"
                   wrapperClassName="mb-4"
                   disabled={!editing}
+                  value={state.phone}
+                  onChange={(e) =>
+                    dispatch({ type: 'UPDATE_PHONE', payload: e.target.value })
+                  }
                 />
 
                 <Input
                   type="text"
                   placeholder="Address"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
                   icon="Location"
                   inputClassName="disabled:opacity-60"
                   label="Address"
                   wrapperClassName="mb-4"
                   disabled={!editing}
+                  value={state.address}
+                  onChange={(e) =>
+                    dispatch({
+                      type: 'UPDATE_ADDRESS',
+                      payload: e.target.value,
+                    })
+                  }
                 />
 
                 <Input
                   type="text"
                   placeholder="State"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
                   label="State"
                   inputClassName="disabled:opacity-60"
                   wrapperClassName="mb-4"
                   disabled={!editing}
+                  value={state.state}
+                  onChange={(e) =>
+                    dispatch({
+                      type: 'UPDATE_STATE',
+                      payload: e.target.value,
+                    })
+                  }
                 />
 
                 <Input
                   type="text"
                   placeholder="City"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
                   label="City"
                   inputClassName="disabled:opacity-60"
                   wrapperClassName="mb-4"
                   disabled={!editing}
+                  value={state.city}
+                  onChange={(e) =>
+                    dispatch({
+                      type: 'UPDATE_CITY',
+                      payload: e.target.value,
+                    })
+                  }
                 />
 
                 <button
                   className={`flex justify-center items-center w-full h-14 rounded-xl outline-primary-10 text-lg text-white bg-action-green ${
-                    editing ? 'cursor-pointer' : 'opacity-30 cursor-not-allowed'
+                    editing && !verifyIfStoredProfileIsEqualToEditedProfile()
+                      ? 'cursor-pointer'
+                      : 'opacity-30 cursor-not-allowed'
                   }`}
+                  disabled={
+                    !editing || verifyIfStoredProfileIsEqualToEditedProfile()
+                  }
                   type="submit"
                 >
                   Update Changes
