@@ -8,20 +8,12 @@ import {
   useCallback,
 } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { gql, useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 
-import { MutationSigninArgs, SigninResponse } from '../__generated__/graphql'
+import { MutationSigninArgs } from '../__generated__/graphql'
 import { setAuthApolloClient } from '../lib/apollo'
+import { SIGNIN, SigninQuery } from '../graphql/mutations/user'
 
-const SIGNIN = gql`
-  mutation SIGNIN($email: String!, $password: String!) {
-    signin(email: $email, password: $password) {
-      email
-      name
-      token
-    }
-  }
-`
 interface AuthContextValues {
   signed: boolean
   loading: boolean
@@ -38,10 +30,6 @@ interface User {
 
 interface AuthProviderProps {
   children: ReactNode
-}
-
-interface SigninQuery {
-  signin: SigninResponse
 }
 
 const AuthContext = createContext({} as AuthContextValues)

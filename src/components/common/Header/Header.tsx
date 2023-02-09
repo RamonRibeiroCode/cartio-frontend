@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 
-import { useAuth } from '../../../contexts/auth'
-import Breadcrumb from '../../ui/Breadcrumb'
-import { PROFILE, ProfileQuery } from '../../../pages/Settings'
 import Icon from '../../ui/Icon'
+import Breadcrumb from '../../ui/Breadcrumb'
+import { useAuth } from '../../../contexts/auth'
+import { PROFILE, ProfileQuery } from '../../../graphql/queries/user'
 
 interface HeaderProps {
   label: string
