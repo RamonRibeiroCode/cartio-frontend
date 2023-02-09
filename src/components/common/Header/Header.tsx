@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom'
+import { useQuery } from '@apollo/client'
 
 import { useAuth } from '../../../contexts/auth'
 import Breadcrumb from '../../ui/Breadcrumb'
-import Profile from '../../../assets/profile.png'
+import { PROFILE, ProfileQuery } from '../../../pages/Settings'
+import Icon from '../../ui/Icon'
 
 interface HeaderProps {
   label: string
@@ -10,6 +12,7 @@ interface HeaderProps {
 
 function Header({ label }: HeaderProps) {
   const { user } = useAuth()
+  const { data } = useQuery<ProfileQuery>(PROFILE)
 
   return (
     <header className="flex flex-col h-20">
@@ -23,7 +26,19 @@ function Header({ label }: HeaderProps) {
             {user.name}
           </span>
 
-          <img src={Profile} alt="" />
+          <div className="flex justify-center items-center w-8 h-8">
+            {data?.profile.imageUrl ? (
+              <img
+                className="w-8 rounded-md"
+                src={data.profile.imageUrl}
+                alt=""
+              />
+            ) : (
+              <div className="flex justify-center items-center w-8 h-8 rounded-md bg-[#eff1f999]">
+                <Icon name="Image" width={12} height={12} />
+              </div>
+            )}
+          </div>
         </Link>
       </div>
 

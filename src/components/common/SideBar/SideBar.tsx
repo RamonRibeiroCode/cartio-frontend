@@ -42,7 +42,8 @@ function SideBar() {
         collapsed ? 'max-w-[88px] px-4' : 'max-w-[296px] px-8'
       }`}
     >
-      <div
+      <Link
+        to="/"
         className={`flex items-center mb-16 ${
           collapsed ? 'justify-center' : ''
         }`}
@@ -54,7 +55,7 @@ function SideBar() {
             Cartio
           </span>
         )}
-      </div>
+      </Link>
 
       <nav className="flex-1">
         <ul>

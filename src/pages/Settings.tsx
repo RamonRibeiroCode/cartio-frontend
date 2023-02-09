@@ -4,14 +4,14 @@ import * as Tabs from '@radix-ui/react-tabs'
 
 import Layout from '../components/common/Layout'
 import Input from '../components/ui/Input'
-import Profile from '../assets/settings-profile.png'
 import {
   UserWithoutPassword,
   MutationUpdateUserArgs,
 } from '../__generated__/graphql'
 import { useAuth } from '../contexts/auth'
+import Icon from '../components/ui/Icon'
 
-const PROFILE = gql`
+export const PROFILE = gql`
   query PROFILE {
     profile {
       email
@@ -20,9 +20,11 @@ const PROFILE = gql`
       address
       state
       city
+      imageUrl
     }
   }
 `
+
 const UPDATE_USER = gql`
   mutation UPDATE_USER($updateUserInput: UpdateUserInput!) {
     updateUser(updateUserInput: $updateUserInput) {
@@ -36,7 +38,7 @@ const UPDATE_USER = gql`
   }
 `
 
-interface ProfileQuery {
+export interface ProfileQuery {
   profile: UserWithoutPassword
 }
 
@@ -63,6 +65,7 @@ interface ProfileType {
   address: string
   state: string
   city: string
+  imageUrl?: string
 }
 
 const reducer = (state: ProfileType, action: Action) => {
@@ -110,11 +113,11 @@ function Settings() {
   const { handleUpdateUserAuthenticated } = useAuth()
 
   const [editing, setEditing] = useState(false)
-  const [storedProfile, setStoredProfile] = useState({} as ProfileType)
+  const [storagedProfile, setStoredProfile] = useState({} as ProfileType)
   const [state, dispatch] = useReducer(reducer, { ...initialState })
 
   const handleCancelUpdate = () => {
-    dispatch({ type: 'SET_INITIAL_PROFILE', payload: storedProfile })
+    dispatch({ type: 'SET_INITIAL_PROFILE', payload: storagedProfile })
   }
 
   const handleUpdateProfile = (e: FormEvent<HTMLFormElement>) => {
@@ -126,22 +129,24 @@ function Settings() {
     const userToUpdate = {
       ...state,
       email: undefined,
+      imageUrl: undefined,
     }
 
     updateUser({ variables: { updateUserInput: userToUpdate } })
 
-    if (state.name !== storedProfile.name) {
+    if (state.name !== storagedProfile.name) {
       handleUpdateUserAuthenticated(state.email, state.name)
     }
   }
 
   const verifyIfStoredProfileIsEqualToEditedProfile = () => {
-    return JSON.stringify(storedProfile) === JSON.stringify(state)
+    return JSON.stringify(storagedProfile) === JSON.stringify(state)
   }
 
   useEffect(() => {
     if (data) {
-      const { name, email, address, phone, state, city } = data.profile
+      const { name, email, address, phone, state, city, imageUrl } =
+        data.profile
 
       const profile: ProfileType = {
         name,
@@ -150,6 +155,7 @@ function Settings() {
         address: address ?? '',
         state: state ?? '',
         city: city ?? '',
+        imageUrl: imageUrl ?? undefined,
       }
 
       setStoredProfile(profile)
@@ -314,12 +320,20 @@ function Settings() {
                 </button>
               </form>
 
-              <div className="relative ml-20">
-                <img
-                  className='rounded-xl overflow-hidden"'
-                  src={Profile}
-                  alt="Profile"
-                />
+              <div className="ml-20">
+                {storagedProfile.imageUrl ? (
+                  <div className="relative">
+                    <img
+                      className="w-[172px] rounded-xl overflow-hidden"
+                      src={storagedProfile.imageUrl}
+                      alt="Profile"
+                    />
+                  </div>
+                ) : (
+                  <div className="flex justify-center items-center w-[172px] h-[172px] rounded-xl bg-[#eff1f999]">
+                    <Icon name="Image" width={64} height={64} />
+                  </div>
+                )}
               </div>
             </div>
           </Tabs.Content>

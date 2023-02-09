@@ -11,6 +11,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The `Upload` scalar type represents a file upload. */
+  Upload: any;
 };
 
 export type CreateUserInput = {
@@ -23,6 +25,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createUser: UserWithoutPassword;
   signin: SigninResponse;
+  updateProfilePicture: UserWithoutPassword;
   updateUser: UserWithoutPassword;
 };
 
@@ -35,6 +38,11 @@ export type MutationCreateUserArgs = {
 export type MutationSigninArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
+};
+
+
+export type MutationUpdateProfilePictureArgs = {
+  file: Scalars['Upload'];
 };
 
 
@@ -68,6 +76,7 @@ export type UserWithoutPassword = {
   address?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
   email: Scalars['String'];
+  imageUrl?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   phone?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
