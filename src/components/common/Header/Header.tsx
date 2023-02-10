@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 
 import Icon from '../../ui/Icon'
-import Breadcrumb from '../../ui/Breadcrumb'
+import Breadcrumb from '../Breadcrumb'
 import { useAuth } from '../../../contexts/auth'
 import { PROFILE, ProfileQuery } from '../../../graphql/queries/user'
 

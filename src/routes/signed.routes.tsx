@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 
 import Dashboard from '../pages/Dashboard'
 import Orders from '../pages/Orders'
@@ -9,12 +9,16 @@ import Settings from '../pages/Settings'
 
 const AuthRoutes = () => (
   <Routes>
-    <Route path="/" element={<Dashboard />} />
+    <Route index element={<Dashboard />} />
     <Route path="/orders" element={<Orders />} />
+
+    <Route path="/orders/:contactId" element={<Orders />} />
+
     <Route path="/customers" element={<Customers />} />
     <Route path="/inventory" element={<Inventory />} />
     <Route path="/conversations" element={<Conversations />} />
     <Route path="/settings" element={<Settings />} />
+    <Route path="*" element={<Navigate replace to="/" />} />
   </Routes>
 )
 

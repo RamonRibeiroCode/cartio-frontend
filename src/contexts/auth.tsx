@@ -15,7 +15,7 @@ import { setAuthApolloClient } from '../lib/apollo'
 import { SIGNIN, SigninQuery } from '../graphql/mutations/user'
 
 interface AuthContextValues {
-  signed: boolean
+  signed: null | boolean
   loading: boolean
   user: User
   handleLogin: (email: string, password: string) => Promise<void>
@@ -35,7 +35,7 @@ interface AuthProviderProps {
 const AuthContext = createContext({} as AuthContextValues)
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [signed, setSigned] = useState(false)
+  const [signed, setSigned] = useState<null | boolean>(null)
   const [loading, setLoading] = useState(false)
   const [user, setUser] = useState({} as User)
   const [signin] = useMutation<SigninQuery, MutationSigninArgs>(SIGNIN)
@@ -93,6 +93,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
         setUser(storagedUserParsed)
         setSigned(true)
+      } else {
+        setSigned(false)
       }
 
       setLoading(false)
