@@ -36,7 +36,7 @@ const AuthContext = createContext({} as AuthContextValues)
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [signed, setSigned] = useState<null | boolean>(null)
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [user, setUser] = useState({} as User)
   const [signin] = useMutation<SigninQuery, MutationSigninArgs>(SIGNIN)
 
@@ -83,8 +83,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     async function loadStoragedData() {
-      setLoading(true)
-
       const storagedUser = localStorage.getItem('cartio:user')
       const storagedToken = localStorage.getItem('cartio:token')
 

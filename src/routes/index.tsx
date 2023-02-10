@@ -3,10 +3,9 @@ import SignedRoutes from './signed.routes'
 import { useAuth } from '../contexts/auth.jsx'
 
 const Routes = () => {
-  const { signed } = useAuth()
+  const { signed, loading } = useAuth()
 
-  // Loading if user is logged or not
-  if (signed === null) {
+  if (loading) {
     return null
   }
 

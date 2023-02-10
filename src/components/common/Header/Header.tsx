@@ -16,7 +16,7 @@ function Header({ label }: HeaderProps) {
 
   return (
     <header className="flex flex-col h-20">
-      <div className="flex-1 flex justify-between items-center px-5">
+      <div className="flex-1 flex justify-between items-center px-5 border-b border-[#F1F3F9]">
         <h1 className="text-sub-heading-3 font-medium text-black-60">
           {label}
         </h1>
@@ -42,7 +42,7 @@ function Header({ label }: HeaderProps) {
         </Link>
       </div>
 
-      <div className="h-6 border-t border-[#F1F3F9] px-5">
+      <div className="h-6 px-5">
         <Breadcrumb />
       </div>
     </header>
