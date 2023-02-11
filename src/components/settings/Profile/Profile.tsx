@@ -12,6 +12,11 @@ function ProfileForm() {
     dispatch,
     verifyIfStoredProfileIsEqualToEditedProfile,
     storagedProfile,
+    handleSelectImageAndUpload,
+    previewSrc,
+    updating,
+    deleteProfilePicture,
+    deleting,
   } = useProfile()
 
   return (
@@ -147,20 +152,36 @@ function ProfileForm() {
           </button>
         </form>
 
-        <div className="ml-20">
-          {storagedProfile.imageUrl ? (
-            <div className="relative">
-              <img
-                className="w-[172px] rounded-xl overflow-hidden"
-                src={storagedProfile.imageUrl}
-                alt="Profile"
-              />
-            </div>
+        <div className="ml-20 relative">
+          {storagedProfile.imageUrl || previewSrc ? (
+            <img
+              className="w-[172px] rounded-xl overflow-hidden"
+              src={previewSrc || storagedProfile.imageUrl}
+              alt="Profile"
+            />
           ) : (
             <div className="flex justify-center items-center w-[172px] h-[172px] rounded-xl bg-[#eff1f999]">
               <Icon name="Image" width={64} height={64} />
             </div>
           )}
+
+          <div className="absolute top-0 right-0 flex pt-3 pr-4">
+            <button
+              className="w-8 h-8 flex justify-center items-center bg-secondary-30 rounded-lg disabled:bg-black-10 disabled:opacity-60 disabled:cursor-not-allowed"
+              onClick={handleSelectImageAndUpload}
+              disabled={updating || deleting}
+            >
+              <Icon name="Upload" width={20} height={20} />
+            </button>
+
+            <button
+              className="w-8 h-8 flex justify-center items-center bg-secondary-30 rounded-lg ml-1 disabled:bg-black-10 disabled:opacity-60 disabled:cursor-not-allowed"
+              onClick={deleteProfilePicture}
+              disabled={updating || deleting}
+            >
+              <Icon name="Trash" width={20} height={20} />
+            </button>
+          </div>
         </div>
       </div>
     </>

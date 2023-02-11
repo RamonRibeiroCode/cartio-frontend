@@ -12,6 +12,7 @@
   "dependencies": {
     "@apollo/client": "^3.7.7",
     "@radix-ui/react-tabs": "^1.0.2",
+    "apollo-upload-client": "^17.0.0",
     "graphql": "^16.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -20,6 +21,7 @@
   "devDependencies": {
     "@graphql-codegen/cli": "^3.0.0",
     "@graphql-codegen/client-preset": "^2.0.0",
+    "@types/apollo-upload-client": "^17.0.2",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@typescript-eslint/eslint-plugin": "^5.43.0",

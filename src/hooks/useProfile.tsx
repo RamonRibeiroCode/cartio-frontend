@@ -1,10 +1,18 @@
 import { FormEvent, useEffect, useReducer, useState } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
 
-import { UPDATE_USER, UpdateUserResponse } from '../graphql/mutations/user'
+import {
+  UPDATE_USER,
+  UpdateUserResponse,
+  UPDATE_PROFILE_PICTURE,
+  DELETE_PROFILE_PICTURE,
+} from '../graphql/mutations/user'
 import { PROFILE, ProfileQuery } from '../graphql/queries/user'
 import { useAuth } from '../contexts/auth'
-import { MutationUpdateUserArgs } from '../__generated__/graphql'
+import {
+  MutationUpdateProfilePictureArgs,
+  MutationUpdateUserArgs,
+} from '../__generated__/graphql'
 
 interface Action {
   type:
@@ -26,6 +34,10 @@ interface ProfileType {
   state: string
   city: string
   imageUrl?: string
+}
+
+interface Target extends EventTarget {
+  files: FileList
 }
 
 const reducer = (state: ProfileType, action: Action) => {
@@ -67,13 +79,32 @@ const initialState = {
 
 const useProfile = () => {
   const { data } = useQuery<ProfileQuery>(PROFILE)
+
   const [updateUser] = useMutation<UpdateUserResponse, MutationUpdateUserArgs>(
     UPDATE_USER
   )
-  const { handleUpdateUserAuthenticated } = useAuth()
 
+  const [mutateUpdateProfilePicture, { loading: updating }] = useMutation<
+    { imageUrl: string },
+    MutationUpdateProfilePictureArgs
+  >(UPDATE_PROFILE_PICTURE)
+
+  const [mutateDeleteProfilePicture, { loading: deleting }] = useMutation(
+    DELETE_PROFILE_PICTURE
+  )
+
+  const updateProfilePicture = async (file: File) => {
+    await mutateUpdateProfilePicture({
+      variables: {
+        file: file,
+      },
+    })
+  }
+
+  const { handleUpdateUserAuthenticated } = useAuth()
   const [editing, setEditing] = useState(false)
-  const [storagedProfile, setStoredProfile] = useState({} as ProfileType)
+  const [storagedProfile, setStoragedProfile] = useState({} as ProfileType)
+  const [src, setSrc] = useState('')
   const [state, dispatch] = useReducer(reducer, { ...initialState })
 
   const handleCancelUpdate = () => {
@@ -84,7 +115,7 @@ const useProfile = () => {
     e.preventDefault()
 
     setEditing(false)
-    setStoredProfile(state)
+    setStoragedProfile(state)
 
     const userToUpdate = {
       ...state,
@@ -103,6 +134,33 @@ const useProfile = () => {
     return JSON.stringify(storagedProfile) === JSON.stringify(state)
   }
 
+  const handleSelectImageAndUpload = () => {
+    const input = document.createElement('input')
+
+    input.type = 'file'
+    input.accept = 'image/*'
+
+    input.onchange = async (event) => {
+      const [file] = (event.target as Target).files
+
+      const reader = new FileReader()
+
+      reader.onload = () => setSrc(reader.result as string)
+      reader.readAsDataURL(file)
+
+      await updateProfilePicture(file)
+    }
+
+    input.click()
+  }
+
+  const deleteProfilePicture = async () => {
+    setSrc('')
+    setStoragedProfile((prevUser) => ({ ...prevUser, imageUrl: undefined }))
+
+    await mutateDeleteProfilePicture()
+  }
+
   useEffect(() => {
     if (data) {
       const { name, email, address, phone, state, city, imageUrl } =
@@ -118,7 +176,7 @@ const useProfile = () => {
         imageUrl: imageUrl ?? undefined,
       }
 
-      setStoredProfile(profile)
+      setStoragedProfile(profile)
 
       dispatch({ type: 'SET_INITIAL_PROFILE', payload: profile })
     }
@@ -133,6 +191,11 @@ const useProfile = () => {
     dispatch,
     verifyIfStoredProfileIsEqualToEditedProfile,
     storagedProfile,
+    handleSelectImageAndUpload,
+    previewSrc: src,
+    updating,
+    deleteProfilePicture,
+    deleting,
   }
 }
 

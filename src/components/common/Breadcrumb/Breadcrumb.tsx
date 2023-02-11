@@ -7,8 +7,6 @@ function Breadcrumb() {
 
   const paths = pathname.split('/').filter(Boolean)
 
-  console.log(paths)
-
   return (
     <div className="h-full flex items-center">
       <Link to="/">
@@ -19,7 +17,7 @@ function Breadcrumb() {
         const fullPath = `/${paths.slice(0, index + 1).join('/')}`
 
         return (
-          <>
+          <div key={path}>
             <span className="mx-3 text-label-1 text-black-30">/</span>
 
             <Link
@@ -29,7 +27,7 @@ function Breadcrumb() {
             >
               {path}
             </Link>
-          </>
+          </div>
         )
       })}
     </div>

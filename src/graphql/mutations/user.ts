@@ -35,3 +35,19 @@ export const SIGNIN = gql`
     }
   }
 `
+
+export const UPDATE_PROFILE_PICTURE = gql`
+  mutation UPDATE_PROFILE_PICTURE($file: Upload!) {
+    updateProfilePicture(file: $file) {
+      imageUrl
+    }
+  }
+`
+export const DELETE_PROFILE_PICTURE = gql`
+  mutation DELETE_PROFILE_PICTURE {
+    deleteProfilePicture {
+      name
+      imageUrl
+    }
+  }
+`
