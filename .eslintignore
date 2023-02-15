@@ -1,0 +1,13 @@
+package.json
+node_modules/
+public/
+coverage/
+.vscode/
+.cache/
+.next/
+@generated
+src/__generated__
+src/typings/
+
+postcss.config.js
+tailwind.config.js
