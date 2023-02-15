@@ -22,7 +22,7 @@ export const setAuthApolloClient = (token: string) => {
 }
 
 export const httpLink = createUploadLink({
-  uri: 'http://localhost:5000/graphql',
+  uri: import.meta.env.VITE_APOLLO_SERVER_URL,
 })
 
 const storagedToken = localStorage.getItem('cartio:token')
