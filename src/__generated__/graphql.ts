@@ -11,8 +11,27 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format. */
+  DateTime: any;
   /** The `Upload` scalar type represents a file upload. */
   Upload: any;
+};
+
+export type Category = {
+  __typename?: 'Category';
+  id: Scalars['ID'];
+  name: Scalars['String'];
+};
+
+export type CreateProductInput = {
+  categoryId: Scalars['String'];
+  expiresIn?: InputMaybe<Scalars['DateTime']>;
+  listPrice: Scalars['Float'];
+  name: Scalars['String'];
+  quantity: Scalars['Float'];
+  sellingPrice: Scalars['Float'];
+  status: Scalars['String'];
+  validIn: Scalars['DateTime'];
 };
 
 export type CreateUserInput = {
@@ -23,10 +42,23 @@ export type CreateUserInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createCategory: Category;
+  createProduct: Product;
   createUser: UserWithoutPassword;
+  deleteProfilePicture: UserWithoutPassword;
   signin: SigninResponse;
   updateProfilePicture: UserWithoutPassword;
   updateUser: UserWithoutPassword;
+};
+
+
+export type MutationCreateCategoryArgs = {
+  name: Scalars['String'];
+};
+
+
+export type MutationCreateProductArgs = {
+  createProductInput: CreateProductInput;
 };
 
 
@@ -50,8 +82,25 @@ export type MutationUpdateUserArgs = {
   updateUserInput: UpdateUserInput;
 };
 
+export type Product = {
+  __typename?: 'Product';
+  category: Category;
+  categoryId: Scalars['String'];
+  expiresIn?: Maybe<Scalars['DateTime']>;
+  id: Scalars['ID'];
+  listPrice: Scalars['Float'];
+  name: Scalars['String'];
+  quantity: Scalars['Float'];
+  sellingPrice: Scalars['Float'];
+  slug: Scalars['String'];
+  status: Scalars['String'];
+  validIn: Scalars['DateTime'];
+};
+
 export type Query = {
   __typename?: 'Query';
+  categories: Array<Category>;
+  products: Array<Product>;
   profile: UserWithoutPassword;
   sayHello: Scalars['String'];
 };
@@ -66,7 +115,8 @@ export type SigninResponse = {
 export type UpdateUserInput = {
   address?: InputMaybe<Scalars['String']>;
   city?: InputMaybe<Scalars['String']>;
-  name: Scalars['String'];
+  imageKey?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
   state?: InputMaybe<Scalars['String']>;
 };
@@ -76,6 +126,7 @@ export type UserWithoutPassword = {
   address?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
   email: Scalars['String'];
+  imageKey?: Maybe<Scalars['String']>;
   imageUrl?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   phone?: Maybe<Scalars['String']>;

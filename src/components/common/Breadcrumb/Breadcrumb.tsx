@@ -22,7 +22,7 @@ function Breadcrumb() {
 
             <Link
               key={path}
-              className="text-label-1 text-black-30 first-letter:uppercase"
+              className="text-label-1 text-black-30 capitalize"
               to={fullPath}
             >
               {path}
