@@ -116,7 +116,7 @@ function SideBar() {
       </button>
 
       <button
-        className={`flex items-center w-full h-14  rounded-lg hover:bg-[#cc5f5f33] ${
+        className={`flex items-center w-full h-14  rounded-lg hover:bg-action-light-red ${
           collapsed ? 'justify-center' : 'px-4'
         }`}
         onClick={handleLogout}
