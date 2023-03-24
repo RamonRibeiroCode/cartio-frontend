@@ -1,10 +1,12 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import Icon from '../../ui/Icon'
 
-function Breadcrumb() {
-  const { pathname } = useLocation()
+interface BreadcrumbProps {
+  pathname: string
+}
 
+function Breadcrumb({ pathname }: BreadcrumbProps) {
   const paths = pathname.split('/').filter(Boolean)
 
   return (
