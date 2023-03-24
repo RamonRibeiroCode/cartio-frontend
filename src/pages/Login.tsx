@@ -6,8 +6,8 @@ import Input from '../components/ui/Input'
 import { useAuth } from '../contexts/auth'
 
 function Login() {
-  const [email, setEmail] = useState('ramonribeiro120@gmail.com')
-  const [password, setPassword] = useState('123')
+  const [email, setEmail] = useState('user@cartio.com')
+  const [password, setPassword] = useState('cartio')
   const [error, setError] = useState('')
 
   const { handleLogin: login } = useAuth()
