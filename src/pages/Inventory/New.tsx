@@ -1,7 +1,5 @@
-import Layout from '../../components/common/Layout'
-
 function InventoryNew() {
-  return <Layout label="Inventory">Ola</Layout>
+  return <h1>Ola</h1>
 }
 
 export default InventoryNew

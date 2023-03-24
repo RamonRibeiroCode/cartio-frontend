@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 
 import Icon from '../../ui/Icon'
@@ -6,19 +6,18 @@ import Breadcrumb from '../Breadcrumb'
 import { useAuth } from '../../../contexts/auth'
 import { PROFILE, ProfileQuery } from '../../../graphql/queries/user'
 
-interface HeaderProps {
-  label: string
-}
-
-function Header({ label }: HeaderProps) {
+function Header() {
   const { user } = useAuth()
   const { data } = useQuery<ProfileQuery>(PROFILE)
+  const { pathname } = useLocation()
+
+  const label = pathname.split('/').at(1)
 
   return (
     <header className="flex flex-col h-20">
       <div className="flex-1 flex justify-between items-center px-5 border-b border-[#F1F3F9]">
-        <h1 className="text-sub-heading-3 font-medium text-black-60">
-          {label}
+        <h1 className="text-sub-heading-3 font-medium text-black-60 capitalize">
+          {label || 'Dashboard'}
         </h1>
 
         <Link to="/settings" className="flex items-center">
@@ -43,7 +42,7 @@ function Header({ label }: HeaderProps) {
       </div>
 
       <div className="h-6 px-5">
-        <Breadcrumb />
+        <Breadcrumb pathname={pathname} />
       </div>
     </header>
   )
