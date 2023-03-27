@@ -40,7 +40,7 @@ function InventorySummary() {
   const activePercentage = (activeProductsLength / productsLength) * 100
 
   const productsWithLowStock = products.filter(
-    (product) => product.quantity <= 3
+    (product) => product.quantity <= 5
   ).length
 
   const expiredProductsLength = products.filter(
@@ -50,7 +50,7 @@ function InventorySummary() {
   return (
     <div className="flex-1 flex flex-col h-full">
       <div className="flex justify-between items-center mb-5">
-        <h1 className="text-black-60 font-medium text-paragraph-1">
+        <h1 className="text-paragraph-1 font-medium text-black-60">
           Inventory Summary
         </h1>
 

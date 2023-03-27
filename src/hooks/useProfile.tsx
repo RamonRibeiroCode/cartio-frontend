@@ -154,7 +154,7 @@ const useProfile = () => {
     input.click()
   }
 
-  const deleteProfilePicture = async () => {
+  const handleDeleteProfilePicture = async () => {
     setSrc('')
     setStoragedProfile((prevUser) => ({ ...prevUser, imageUrl: undefined }))
 
@@ -194,7 +194,7 @@ const useProfile = () => {
     handleSelectImageAndUpload,
     previewSrc: src,
     updating,
-    deleteProfilePicture,
+    handleDeleteProfilePicture,
     deleting,
   }
 }

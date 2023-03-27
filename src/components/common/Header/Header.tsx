@@ -34,7 +34,7 @@ function Header() {
               />
             ) : (
               <div className="flex justify-center items-center w-8 h-8 rounded-md bg-[#eff1f999]">
-                <Icon name="Image" width={12} height={12} />
+                <Icon name="ImagePrimary" width={12} height={12} />
               </div>
             )}
           </div>
