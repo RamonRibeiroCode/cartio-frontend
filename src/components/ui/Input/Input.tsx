@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from 'react'
+import { InputHTMLAttributes, useState } from 'react'
 
 import Icon from '../Icon'
 
@@ -14,38 +14,41 @@ function Input({
   icon,
   wrapperClassName,
   inputClassName,
+  value,
   ...otherProps
 }: InputProps) {
+  const [inFocus, setInFocus] = useState(false)
+
   return (
-    <>
-      {label && (
-        <label className="text-[#5E6366] text-label-1 mb-2" htmlFor={label}>
-          {label}
-        </label>
+    <div
+      className={`relative flex items-center w-full h-[52px] rounded-lg mt-5 ${
+        wrapperClassName ?? ''
+      }  ${inFocus ? 'bg-[#e9ecf8e6]' : 'bg-[#eff1f999]'}`}
+    >
+      <label
+        className={`text-label-1 absolute -top-6 transition-all ${
+          inFocus || value ? 'opacity-100' : 'opacity-0'
+        } ${inFocus ? 'text-primary-100' : 'text-[#5E6366]'}`}
+        htmlFor={label}
+      >
+        {label}
+      </label>
+
+      {icon && (
+        <Icon name={icon} className="absolute left-4" width={24} height={24} />
       )}
 
-      <div
-        className={`relative flex items-center w-full h-[52px] bg-[#eff1f999] rounded-lg ${
-          wrapperClassName ?? ''
-        }`}
-      >
-        {icon && (
-          <Icon
-            name={icon}
-            className="absolute left-4"
-            width={24}
-            height={24}
-          />
-        )}
-
-        <input
-          id={label}
-          className={`w-full h-full bg-transparent outline-primary-10 text-base text-[#5E6366] placeholder:text-[#ABAFB1] pr-4
+      <input
+        id={label}
+        type="password"
+        className={`w-full h-full bg-transparent outline-0 text-base text-[#5E6366] placeholder:text-[#ABAFB1] focus:border-2 focus:border-primary-10 rounded-lg pr-4
           ${inputClassName ?? ''} ${icon ? 'pl-14' : 'pl-4'}`}
-          {...otherProps}
-        />
-      </div>
-    </>
+        value={value}
+        onFocus={() => setInFocus(true)}
+        onBlur={() => setInFocus(false)}
+        {...otherProps}
+      />
+    </div>
   )
 }
 

@@ -49,14 +49,16 @@ function Login() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               icon="Mail"
+              label="Mail"
             />
 
             <Input
-              type="text"
+              type="password"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               icon="Password"
+              label="Password"
             />
 
             {error && (

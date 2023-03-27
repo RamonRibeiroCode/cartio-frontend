@@ -176,18 +176,30 @@ function InventorySummary() {
             <th>
               <div className="opacity-0 cursor-default">Img</div>
             </th>
-            <th className="text-left py-4 text-sm text-black-90">
+            <th className="text-left py-4 text-sm font-semibold text-black-90">
               Product Name
             </th>
-            <th className="text-left py-4 text-sm text-black-90">Category</th>
-            <th className="text-left py-4 text-sm text-black-90">Unit Price</th>
-            <th className="text-left py-4 text-sm text-black-90">In-Stock</th>
-            <th className="text-left py-4 text-sm text-black-90">Discount</th>
-            <th className="text-left py-4 text-sm text-black-90">
+            <th className="text-left py-4 text-sm font-semibold text-black-90">
+              Category
+            </th>
+            <th className="text-left py-4 text-sm font-semibold text-black-90">
+              Unit Price
+            </th>
+            <th className="text-left py-4 text-sm font-semibold text-black-90">
+              In-Stock
+            </th>
+            <th className="text-left py-4 text-sm font-semibold text-black-90">
+              Discount
+            </th>
+            <th className="text-left py-4 text-sm font-semibold text-black-90">
               Total Value
             </th>
-            <th className="text-left py-4 text-sm text-black-90">Action</th>
-            <th className="text-left py-4 text-sm text-black-90">Status</th>
+            <th className="text-left py-4 text-sm font-semibold text-black-90">
+              Action
+            </th>
+            <th className="text-left py-4 text-sm font-semibold text-black-90">
+              Status
+            </th>
           </thead>
           <tbody>
             {products.map((product) => {
@@ -227,7 +239,7 @@ function InventorySummary() {
                   </td>
 
                   <td className="py-2">
-                    <span className="text-paragraph-2 text-black-40 text-right">
+                    <span className="text-paragraph-2 text-black-40">
                       {formatPrice(sellingPrice)}
                     </span>
                   </td>
