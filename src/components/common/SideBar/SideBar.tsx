@@ -104,10 +104,10 @@ function SideBar() {
         onClick={() => setCollapsed((prevCollapsed) => !prevCollapsed)}
       >
         <Icon
-          className={collapsed ? 'rotate-90' : '-rotate-90'}
-          name="DoubleArrowUp"
-          width={20}
-          height={20}
+          className={collapsed ? 'rotate-180' : ''}
+          name="DoubleArrowLeft"
+          width={24}
+          height={24}
         />
 
         {!collapsed && (

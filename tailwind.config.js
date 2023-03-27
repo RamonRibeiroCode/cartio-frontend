@@ -33,6 +33,7 @@ module.exports = {
           30: '#B6BFE8',
           20: '#C4CAE8',
           10: '#DBDEEE',
+          transparent: "#5570f129"
         },
         secondary: {
           100: '#FFCC91',
@@ -60,6 +61,7 @@ module.exports = {
         },
         action: {
           green: '#519C66',
+          "red-transparent": "#cc5f5f33",
           red: '#CC5F5F',
         },
       },
