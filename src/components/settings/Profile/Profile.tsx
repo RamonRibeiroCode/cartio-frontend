@@ -25,7 +25,7 @@ function ProfileForm() {
         <p className="text-sub-heading-3 text-black-60">Profile Settings</p>
 
         <button
-          className={`flex justify-center items-center w-full max-w-[180px] h-14 rounded-xl outline-primary-10 mt-12 text-lg text-white ${
+          className={`flex justify-center items-center w-full max-w-[180px] h-14 rounded-xl outline-primary-10 mt-11 text-lg text-white ${
             editing
               ? 'bg-action-red hover:opacity-90'
               : 'bg-primary-100 hover:bg-primary-80'
@@ -50,10 +50,8 @@ function ProfileForm() {
             type="text"
             placeholder="Email"
             icon="Mail"
-            inputClassName="disabled:opacity-60"
             label="Email *"
             required
-            wrapperClassName="mb-4"
             disabled
             value={state.email}
             onChange={(e) =>
@@ -65,10 +63,8 @@ function ProfileForm() {
             type="text"
             placeholder="Full Name"
             icon="Profile"
-            inputClassName="disabled:opacity-60"
             label="Full Name *"
             required
-            wrapperClassName="mb-4"
             disabled={!editing}
             value={state.name}
             onChange={(e) =>
@@ -78,11 +74,9 @@ function ProfileForm() {
 
           <Input
             type="text"
-            inputClassName="disabled:opacity-60"
             placeholder="Phone Number"
             icon="Phone"
             label="Phone Number"
-            wrapperClassName="mb-4"
             disabled={!editing}
             value={state.phone}
             onChange={(e) =>
@@ -94,9 +88,7 @@ function ProfileForm() {
             type="text"
             placeholder="Address"
             icon="Location"
-            inputClassName="disabled:opacity-60"
             label="Address"
-            wrapperClassName="mb-4"
             disabled={!editing}
             value={state.address}
             onChange={(e) =>
@@ -111,8 +103,6 @@ function ProfileForm() {
             type="text"
             placeholder="State"
             label="State"
-            inputClassName="disabled:opacity-60"
-            wrapperClassName="mb-4"
             disabled={!editing}
             value={state.state}
             onChange={(e) =>
@@ -127,7 +117,6 @@ function ProfileForm() {
             type="text"
             placeholder="City"
             label="City"
-            inputClassName="disabled:opacity-60"
             wrapperClassName="mb-4"
             disabled={!editing}
             value={state.city}

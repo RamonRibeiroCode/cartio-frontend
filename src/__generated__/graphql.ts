@@ -24,14 +24,14 @@ export type Category = {
 };
 
 export type CreateProductInput = {
-  categoryId: Scalars['String'];
+  categoryId?: InputMaybe<Scalars['String']>;
   expiresIn?: InputMaybe<Scalars['DateTime']>;
-  listPrice: Scalars['Float'];
+  listPrice?: InputMaybe<Scalars['Float']>;
   name: Scalars['String'];
-  quantity: Scalars['Float'];
-  sellingPrice: Scalars['Float'];
+  quantity?: InputMaybe<Scalars['Float']>;
+  sellingPrice?: InputMaybe<Scalars['Float']>;
   status: Scalars['String'];
-  validIn: Scalars['DateTime'];
+  validIn?: InputMaybe<Scalars['DateTime']>;
 };
 
 export type CreateUserInput = {
@@ -94,7 +94,7 @@ export type Product = {
   sellingPrice: Scalars['Float'];
   slug: Scalars['String'];
   status: Scalars['String'];
-  validIn: Scalars['DateTime'];
+  validIn?: Maybe<Scalars['DateTime']>;
 };
 
 export type Query = {

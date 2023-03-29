@@ -43,7 +43,6 @@ function Login() {
             onSubmit={handleLogin}
           >
             <Input
-              wrapperClassName="mb-8"
               type="text"
               placeholder="Email Address"
               value={email}
@@ -66,7 +65,7 @@ function Login() {
             )}
 
             <button
-              className="flex justify-center items-center w-full max-w-[180px] h-14 bg-primary-100 rounded-xl outline-primary-10 mt-12 py-4 text-lg text-white hover:bg-primary-80"
+              className="flex justify-center items-center w-full max-w-[180px] h-14 bg-primary-100 rounded-xl outline-primary-10 mt-12 py-4 hover:bg-primary-80 active:bg-primary-pressed text-lg text-white"
               type="submit"
             >
               Login

@@ -7,17 +7,19 @@ import Conversations from '../pages/Conversations'
 import Settings from '../pages/Settings'
 import InventorySummary from '../pages/Inventory/Summary'
 import InventoryNew from '../pages/Inventory/New'
+import InventoryDetail from '../pages/Inventory/Detail'
 
 const AuthRoutes = () => (
   <Routes>
     <Route index element={<Dashboard />} />
     <Route path="/orders" element={<Orders />} />
-    <Route path="/orders/:contactId" element={<Orders />} />
+    <Route path="/orders/:id" element={<Orders />} />
 
     <Route path="/customers" element={<Customers />} />
 
     <Route path="/inventory" element={<InventorySummary />} />
     <Route path="/inventory/new" element={<InventoryNew />} />
+    <Route path="/inventory/:id" element={<InventoryDetail />} />
 
     <Route path="/conversations" element={<Conversations />} />
 

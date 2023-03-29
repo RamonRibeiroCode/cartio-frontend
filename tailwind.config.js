@@ -33,7 +33,8 @@ module.exports = {
           30: '#B6BFE8',
           20: '#C4CAE8',
           10: '#DBDEEE',
-          transparent: "#5570f129"
+          transparent: "#5570f129",
+          pressed: "#5B6EC6"
         },
         secondary: {
           100: '#FFCC91',

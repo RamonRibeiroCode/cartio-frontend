@@ -58,7 +58,7 @@ function InventorySummary() {
         </h1>
 
         <Link
-          className="flex items-center bg-primary-100 rounded-xl py-[6px] px-5"
+          className="flex items-center bg-primary-100 rounded-xl py-[6px] px-5 hover:bg-primary-80 active:bg-primary-pressed"
           to="/inventory/new"
         >
           <Icon name="Plus" width={24} height={24} />
@@ -201,10 +201,14 @@ function InventorySummary() {
                   </TableData>
 
                   <TableData>
-                    <img src={productImg} alt="" />
+                    <Link to={`/inventory/${id}`}>
+                      <img src={productImg} alt="" />
+                    </Link>
                   </TableData>
 
-                  <TableData>{name}</TableData>
+                  <TableData>
+                    <Link to={`/inventory/${id}`}>{name}</Link>
+                  </TableData>
 
                   <TableData>{category.name}</TableData>
 
