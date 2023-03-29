@@ -25,6 +25,7 @@ export type Category = {
 
 export type CreateProductInput = {
   categoryId?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
   expiresIn?: InputMaybe<Scalars['DateTime']>;
   listPrice?: InputMaybe<Scalars['Float']>;
   name: Scalars['String'];
@@ -86,6 +87,7 @@ export type Product = {
   __typename?: 'Product';
   category: Category;
   categoryId: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
   expiresIn?: Maybe<Scalars['DateTime']>;
   id: Scalars['ID'];
   listPrice: Scalars['Float'];

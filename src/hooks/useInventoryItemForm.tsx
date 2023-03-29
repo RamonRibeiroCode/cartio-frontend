@@ -11,7 +11,7 @@ interface Action {
     | 'UPDATE_DESCRIPTION'
     | 'UPDATE_DATETIME_ADDRED'
     | 'UPDATE_DATETIME_EXPIRED'
-  payload: ProductType | string | ProductCategory | number | Date
+  payload: ProductType | string | ProductCategory | number | Date | undefined
 }
 
 interface ProductType {
@@ -71,8 +71,8 @@ const initialState = {
     name: 'Gadgets',
   },
   description: 'Descrição qualquer por aqui',
-  listPrice: 120000,
-  sellingPrice: 80000,
+  listPrice: 10.99,
+  sellingPrice: 10.99,
   quantity: 12,
   dateAddred: new Date(),
 }

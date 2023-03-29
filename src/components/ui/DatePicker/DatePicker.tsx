@@ -25,6 +25,7 @@ const globalStyles = globalCss({
     backgroundColor: 'transparent',
     outline: 0,
     marginTop: '1px',
+    paddingLeft: '56px',
   },
   '.ui-date-picker .react-datepicker__current-month': {
     textTransform: 'capitalize',
@@ -33,10 +34,13 @@ const globalStyles = globalCss({
     {
       width: '105px',
     },
-
   '.ui-date-picker .react-datepicker.react-datepicker--time-only .react-datepicker__time-box':
     {
       width: '105px',
+    },
+  '.ui-date-picker .react-datepicker.react-datepicker--time-only  .react-datepicker__triangle':
+    {
+      marginLeft: '-20px',
     },
 })
 
@@ -45,12 +49,12 @@ function UIDatePicker({ type, ...otherProps }: DatePickerProps) {
 
   return (
     <div
-      className={`flex justify-center items-center w-full h-[52px] rounded-lg py-2 px-4 ui-date-picker ${
+      className={`relative flex justify-center items-center w-full h-[52px] rounded-lg py-2 ui-date-picker ${
         inFocus ? 'bg-[#e9ecf8e6] border-2 border-primary-10' : 'bg-[#eff1f999]'
       } ${globalStyles()}`}
     >
       <Icon
-        className="mr-4"
+        className="mr-4 absolute left-4"
         name={type === 'date' ? 'DateLight' : 'Clock'}
         width={24}
         height={24}

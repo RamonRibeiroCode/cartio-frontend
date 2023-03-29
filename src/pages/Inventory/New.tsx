@@ -1,12 +1,16 @@
 import { useMutation } from '@apollo/client'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import Input from '../../components/ui/Input'
 import Toggle from '../../components/ui/Toggle'
 import DatePicker from '../../components/ui/DatePicker'
+import CurrencyInput from '../../components/ui/Input/CurrencyInput'
 import { CREATE_PRODUCT } from '../../graphql/mutations/product'
 import { useInventoryItemForm } from '../../hooks/useInventoryItemForm'
 import { MutationCreateProductArgs, Product } from '../../__generated__/graphql'
+import { client } from '../../lib/apollo'
+import { PRODUCTS } from '../../graphql/queries/inventory'
 
 function InventoryNew() {
   const [dateAddredChecked, setDateAddredChecked] = useState(true)
@@ -17,6 +21,8 @@ function InventoryNew() {
     CREATE_PRODUCT
   )
 
+  const navigate = useNavigate()
+
   const saveProduct = async (status: string) => {
     await createProduct({
       variables: {
@@ -25,12 +31,19 @@ function InventoryNew() {
           listPrice: state.listPrice,
           sellingPrice: state.sellingPrice,
           quantity: state.quantity,
+          description: state.description,
           categoryId: state.category?.id,
           validIn: dateAddredChecked ? state.dateAddred : undefined,
           expiresIn: dateExpiredChecked ? state.dateExpired : undefined,
           status: status,
         },
       },
+    })
+
+    navigate('/inventory')
+
+    await client.refetchQueries({
+      include: [PRODUCTS],
     })
   }
 
@@ -109,33 +122,35 @@ function InventoryNew() {
             />
 
             <div className="flex">
-              <Input
-                type="text"
+              <CurrencyInput
+                prefix="R$ "
                 placeholder="Selling Price"
                 label="Selling Price *"
                 required
                 value={state.sellingPrice}
                 wrapperClassName="mr-3"
-                onChange={(e) =>
+                onValueChange={(values) => {
+                  console.log(values)
+
                   dispatch({
                     type: 'UPDATE_SELLING_PRICE',
-                    payload: Number(e.target.value),
+                    payload: values.floatValue,
                   })
-                }
+                }}
               />
 
-              <Input
-                type="text"
+              <CurrencyInput
+                prefix="R$ "
                 placeholder="List Price"
                 label="List Price"
                 required
                 value={state.listPrice}
-                onChange={(e) =>
+                onValueChange={(values) => {
                   dispatch({
                     type: 'UPDATE_LIST_PRICE',
-                    payload: Number(e.target.value),
+                    payload: values.floatValue,
                   })
-                }
+                }}
               />
             </div>
 
