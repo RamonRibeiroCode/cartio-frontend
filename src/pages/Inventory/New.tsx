@@ -6,6 +6,7 @@ import Input from '../../components/ui/Input'
 import Toggle from '../../components/ui/Toggle'
 import DatePicker from '../../components/ui/DatePicker'
 import CurrencyInput from '../../components/ui/Input/CurrencyInput'
+import Upload from '../../components/ui/Upload'
 import { CREATE_PRODUCT } from '../../graphql/mutations/product'
 import { useInventoryItemForm } from '../../hooks/useInventoryItemForm'
 import { MutationCreateProductArgs, Product } from '../../__generated__/graphql'
@@ -24,6 +25,8 @@ function InventoryNew() {
   const navigate = useNavigate()
 
   const saveProduct = async (status: string) => {
+    console.log(state.mainImage)
+
     await createProduct({
       variables: {
         createProductInput: {
@@ -36,6 +39,7 @@ function InventoryNew() {
           validIn: dateAddredChecked ? state.dateAddred : undefined,
           expiresIn: dateExpiredChecked ? state.dateExpired : undefined,
           status: status,
+          mainImage: state.mainImage,
         },
       },
     })
@@ -94,7 +98,7 @@ function InventoryNew() {
       </div>
 
       <div className="flex flex-1">
-        <div className="flex w-2/3 bg-white rounded-lg px-8 py-4 mr-5">
+        <div className="flex flex-1 bg-white rounded-lg px-8 py-4 mr-5">
           <div className="flex flex-col w-1/2 mr-8">
             <Input
               type="text"
@@ -313,7 +317,19 @@ function InventoryNew() {
           </div>
         </div>
 
-        <div className="w-1/3 bg-white rounded-lg"></div>
+        <div className="bg-white rounded-lg p-5">
+          <Upload
+            variant="large"
+            handleSelectImage={(file) => {
+              dispatch({ type: 'UPDATE_MAIN_IMAGE', payload: file })
+            }}
+            handleDeleteImage={() => {
+              dispatch({ type: 'UPDATE_MAIN_IMAGE', payload: undefined })
+            }}
+          />
+
+          <div className="flex justify-between my-3">{/* <Upload /> */}</div>
+        </div>
       </div>
     </div>
   )

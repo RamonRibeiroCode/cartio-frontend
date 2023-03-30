@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import Icon from '../../components/ui/Icon'
 import { PRODUCTS, ProductsQuery } from '../../graphql/queries/inventory'
 import { formatPrice, padWithZeroOnStart } from '../../helpers/format'
-import productImg from '../../assets/product-1.jpg'
 import TableHead from '../../components/Inventory/Table/TableHead'
 import TableData from '../../components/Inventory/Table/TableData'
 import ActionButton from '../../components/Inventory/Table/ActionButton'
@@ -43,7 +42,7 @@ function InventorySummary() {
   const activePercentage = (activeProductsLength / productsLength) * 100
 
   const productsWithLowStock = products.filter(
-    (product) => product.quantity <= 5
+    (product) => Number(product.quantity) <= 5
   ).length
 
   const expiredProductsLength = products.filter(
@@ -189,6 +188,7 @@ function InventorySummary() {
                 quantity,
                 listPrice,
                 status,
+                mainImageUrl,
               } = product
 
               return (
@@ -202,7 +202,15 @@ function InventorySummary() {
 
                   <TableData>
                     <Link to={`/inventory/${id}`}>
-                      <img src={productImg} alt="" />
+                      {mainImageUrl ? (
+                        <img
+                          src={mainImageUrl}
+                          alt=""
+                          className="w-9 h-9 rounded-lg border border-[#F1F3F9]"
+                        />
+                      ) : (
+                        <div className="w-9 h-9 rounded-lg border border-[#F1F3F9]" />
+                      )}
                     </Link>
                   </TableData>
 
@@ -218,9 +226,13 @@ function InventorySummary() {
                     {quantity || 'Out of Stock'}
                   </TableData>
 
-                  <TableData>{formatPrice(listPrice - sellingPrice)}</TableData>
+                  <TableData>
+                    {formatPrice(Number(listPrice) - Number(sellingPrice))}
+                  </TableData>
 
-                  <TableData>{formatPrice(sellingPrice * quantity)}</TableData>
+                  <TableData>
+                    {formatPrice(Number(sellingPrice) * Number(quantity))}
+                  </TableData>
 
                   <TableData>
                     {status !== 'Expired' && (

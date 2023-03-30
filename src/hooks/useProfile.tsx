@@ -36,10 +36,6 @@ interface ProfileType {
   imageUrl?: string
 }
 
-interface Target extends EventTarget {
-  files: FileList
-}
-
 const reducer = (state: ProfileType, action: Action) => {
   switch (action.type) {
     case 'SET_INITIAL_PROFILE':
@@ -93,18 +89,9 @@ const useProfile = () => {
     DELETE_PROFILE_PICTURE
   )
 
-  const updateProfilePicture = async (file: File) => {
-    await mutateUpdateProfilePicture({
-      variables: {
-        file: file,
-      },
-    })
-  }
-
   const { handleUpdateUserAuthenticated } = useAuth()
   const [editing, setEditing] = useState(false)
   const [storagedProfile, setStoragedProfile] = useState({} as ProfileType)
-  const [src, setSrc] = useState('')
   const [state, dispatch] = useReducer(reducer, { ...initialState })
 
   const handleCancelUpdate = () => {
@@ -134,28 +121,15 @@ const useProfile = () => {
     return JSON.stringify(storagedProfile) === JSON.stringify(state)
   }
 
-  const handleSelectImageAndUpload = () => {
-    const input = document.createElement('input')
-
-    input.type = 'file'
-    input.accept = 'image/*'
-
-    input.onchange = async (event) => {
-      const [file] = (event.target as Target).files
-
-      const reader = new FileReader()
-
-      reader.onload = () => setSrc(reader.result as string)
-      reader.readAsDataURL(file)
-
-      await updateProfilePicture(file)
-    }
-
-    input.click()
+  const handleSelectImageAndUpload = async (file: File) => {
+    await mutateUpdateProfilePicture({
+      variables: {
+        file: file,
+      },
+    })
   }
 
   const handleDeleteProfilePicture = async () => {
-    setSrc('')
     setStoragedProfile((prevUser) => ({ ...prevUser, imageUrl: undefined }))
 
     await mutateDeleteProfilePicture()
@@ -192,7 +166,6 @@ const useProfile = () => {
     verifyIfStoredProfileIsEqualToEditedProfile,
     storagedProfile,
     handleSelectImageAndUpload,
-    previewSrc: src,
     updating,
     handleDeleteProfilePicture,
     deleting,

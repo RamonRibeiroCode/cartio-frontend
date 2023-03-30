@@ -28,6 +28,7 @@ export type CreateProductInput = {
   description?: InputMaybe<Scalars['String']>;
   expiresIn?: InputMaybe<Scalars['DateTime']>;
   listPrice?: InputMaybe<Scalars['Float']>;
+  mainImage?: InputMaybe<Scalars['Upload']>;
   name: Scalars['String'];
   quantity?: InputMaybe<Scalars['Float']>;
   sellingPrice?: InputMaybe<Scalars['Float']>;
@@ -90,10 +91,12 @@ export type Product = {
   description?: Maybe<Scalars['String']>;
   expiresIn?: Maybe<Scalars['DateTime']>;
   id: Scalars['ID'];
-  listPrice: Scalars['Float'];
+  listPrice?: Maybe<Scalars['Float']>;
+  mainImageKey?: Maybe<Scalars['String']>;
+  mainImageUrl: Scalars['String'];
   name: Scalars['String'];
-  quantity: Scalars['Float'];
-  sellingPrice: Scalars['Float'];
+  quantity?: Maybe<Scalars['Float']>;
+  sellingPrice?: Maybe<Scalars['Float']>;
   slug: Scalars['String'];
   status: Scalars['String'];
   validIn?: Maybe<Scalars['DateTime']>;

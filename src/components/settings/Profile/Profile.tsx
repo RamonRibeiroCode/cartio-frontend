@@ -13,7 +13,6 @@ function ProfileForm() {
     verifyIfStoredProfileIsEqualToEditedProfile,
     storagedProfile,
     handleSelectImageAndUpload,
-    previewSrc,
     updating,
     handleDeleteProfilePicture,
     deleting,
@@ -144,10 +143,8 @@ function ProfileForm() {
         <div className="ml-20">
           <Upload
             imageUrl={storagedProfile.imageUrl}
-            previewSrc={previewSrc}
-            deleting={deleting}
-            updating={updating}
-            handleSelectImageAndUpload={handleSelectImageAndUpload}
+            disabled={updating || deleting}
+            handleSelectImage={handleSelectImageAndUpload}
             handleDeleteImage={handleDeleteProfilePicture}
           />
         </div>

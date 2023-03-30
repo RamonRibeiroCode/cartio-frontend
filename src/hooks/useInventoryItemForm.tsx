@@ -11,7 +11,15 @@ interface Action {
     | 'UPDATE_DESCRIPTION'
     | 'UPDATE_DATETIME_ADDRED'
     | 'UPDATE_DATETIME_EXPIRED'
-  payload: ProductType | string | ProductCategory | number | Date | undefined
+    | 'UPDATE_MAIN_IMAGE'
+  payload:
+    | ProductType
+    | string
+    | ProductCategory
+    | number
+    | Date
+    | File
+    | undefined
 }
 
 interface ProductType {
@@ -23,6 +31,7 @@ interface ProductType {
   description: string
   dateAddred?: Date
   dateExpired?: Date
+  mainImage?: File
 }
 
 interface ProductCategory {
@@ -59,6 +68,9 @@ const reducer = (state: ProductType, action: Action) => {
     case 'UPDATE_DATETIME_EXPIRED':
       return { ...state, dateExpired: action.payload as Date }
 
+    case 'UPDATE_MAIN_IMAGE':
+      return { ...state, mainImage: action.payload as File }
+
     default:
       return state
   }
@@ -67,7 +79,7 @@ const reducer = (state: ProductType, action: Action) => {
 const initialState = {
   name: 'Iphone 14 Pro Max',
   category: {
-    id: '91466489-4111-4e5b-bfce-b34b3324053e',
+    id: '9fe23c7f-862e-4e2c-8b5e-89c7d8d49e4d',
     name: 'Gadgets',
   },
   description: 'Descrição qualquer por aqui',

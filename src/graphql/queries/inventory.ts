@@ -19,6 +19,7 @@ export const PRODUCTS = gql`
       slug
       status
       validIn
+      mainImageUrl
 
       category {
         id
