@@ -1,4 +1,8 @@
+import { useQuery } from '@apollo/client'
 import { useReducer } from 'react'
+
+import { CATEGORIES, CategoriesQuery } from '../graphql/queries/inventory'
+import { Category } from '../__generated__/graphql'
 
 interface Action {
   type:
@@ -12,19 +16,12 @@ interface Action {
     | 'UPDATE_DATETIME_ADDRED'
     | 'UPDATE_DATETIME_EXPIRED'
     | 'UPDATE_MAIN_IMAGE'
-  payload:
-    | ProductType
-    | string
-    | ProductCategory
-    | number
-    | Date
-    | File
-    | undefined
+  payload: ProductType | string | Category | number | Date | File | undefined
 }
 
 interface ProductType {
   name: string
-  category?: ProductCategory
+  category?: Category
   sellingPrice?: number
   listPrice?: number
   quantity?: number
@@ -32,11 +29,6 @@ interface ProductType {
   dateAddred?: Date
   dateExpired?: Date
   mainImage?: File
-}
-
-interface ProductCategory {
-  id: string
-  name: string
 }
 
 const reducer = (state: ProductType, action: Action) => {
@@ -48,7 +40,7 @@ const reducer = (state: ProductType, action: Action) => {
       return { ...state, name: action.payload as string }
 
     case 'UPDATE_CATEGORY':
-      return { ...state, category: action.payload as ProductCategory }
+      return { ...state, category: action.payload as Category }
 
     case 'UPDATE_SELLING_PRICE':
       return { ...state, sellingPrice: action.payload as number }
@@ -91,8 +83,9 @@ const initialState = {
 
 const useInventoryItemForm = (productId?: string) => {
   const [state, dispatch] = useReducer(reducer, { ...initialState })
+  const { data } = useQuery<CategoriesQuery>(CATEGORIES)
 
-  return { state, dispatch }
+  return { state, dispatch, categories: data?.categories ?? [] }
 }
 
 export { useInventoryItemForm }

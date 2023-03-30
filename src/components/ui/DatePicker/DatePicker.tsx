@@ -50,7 +50,7 @@ function UIDatePicker({ type, ...otherProps }: DatePickerProps) {
   return (
     <div
       className={`relative flex justify-center items-center w-full h-[52px] rounded-lg py-2 ui-date-picker ${
-        inFocus ? 'bg-[#e9ecf8e6] border-2 border-primary-10' : 'bg-[#eff1f999]'
+        inFocus ? 'bg-[#e9ecf8] border-2 border-primary-10' : 'bg-[#F4F5FA]'
       } ${globalStyles()}`}
     >
       <Icon

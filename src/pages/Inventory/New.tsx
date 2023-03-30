@@ -9,15 +9,20 @@ import CurrencyInput from '../../components/ui/Input/CurrencyInput'
 import Upload from '../../components/ui/Upload'
 import { CREATE_PRODUCT } from '../../graphql/mutations/product'
 import { useInventoryItemForm } from '../../hooks/useInventoryItemForm'
-import { MutationCreateProductArgs, Product } from '../../__generated__/graphql'
+import {
+  Category,
+  MutationCreateProductArgs,
+  Product,
+} from '../../__generated__/graphql'
 import { client } from '../../lib/apollo'
 import { PRODUCTS } from '../../graphql/queries/inventory'
+import Select from '../../components/ui/Select'
 
 function InventoryNew() {
   const [dateAddredChecked, setDateAddredChecked] = useState(true)
   const [dateExpiredChecked, setDateExpiredChecked] = useState(false)
 
-  const { state, dispatch } = useInventoryItemForm()
+  const { state, dispatch, categories } = useInventoryItemForm()
   const [createProduct] = useMutation<Product, MutationCreateProductArgs>(
     CREATE_PRODUCT
   )
@@ -25,8 +30,6 @@ function InventoryNew() {
   const navigate = useNavigate()
 
   const saveProduct = async (status: string) => {
-    console.log(state.mainImage)
-
     await createProduct({
       variables: {
         createProductInput: {
@@ -111,17 +114,16 @@ function InventoryNew() {
               }
             />
 
-            <Input
-              type="text"
+            <Select<Category>
+              label="Category"
               placeholder="Select Product Category"
-              label="Select Product Category *"
-              required
-              value={state.category?.name}
-              onChange={(e) =>
-                dispatch({
-                  type: 'UPDATE_CATEGORY',
-                  payload: { id: e.target.value, name: e.target.value },
-                })
+              selected={state.category?.name}
+              options={categories.map((category) => ({
+                label: category.name,
+                value: category,
+              }))}
+              onSelect={(option) =>
+                dispatch({ type: 'UPDATE_CATEGORY', payload: option })
               }
             />
 
@@ -134,8 +136,6 @@ function InventoryNew() {
                 value={state.sellingPrice}
                 wrapperClassName="mr-3"
                 onValueChange={(values) => {
-                  console.log(values)
-
                   dispatch({
                     type: 'UPDATE_SELLING_PRICE',
                     payload: values.floatValue,

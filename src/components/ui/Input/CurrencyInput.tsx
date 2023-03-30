@@ -22,7 +22,7 @@ function CurrencyInput({
     <div
       className={`relative flex items-center w-full rounded-lg mt-10 h-[52px] ${
         wrapperClassName ?? ''
-      }  ${inFocus ? 'bg-[#e9ecf8e6]' : 'bg-[#eff1f999]'}`}
+      }  ${inFocus ? 'bg-[#e9ecf8]' : 'bg-[#F4F5FA]'}`}
     >
       <label
         className={`text-label-1 absolute -top-6 transition-all ${

@@ -78,7 +78,7 @@ function Upload({
       ) : (
         <button
           onClick={handleImage}
-          className={`flex flex-col justify-center items-center rounded-xl bg-[#eff1f999] cursor-pointer ${
+          className={`flex flex-col justify-center items-center rounded-xl bg-[#F4F5FA] cursor-pointer ${
             variant === 'large' ? 'w-[372px] h-[372px]' : 'w-[172px] h-[172px]'
           }`}
         >

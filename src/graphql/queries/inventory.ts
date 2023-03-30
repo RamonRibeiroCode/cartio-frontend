@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client'
 
-import { Product } from '../../__generated__/graphql'
+import { Category, Product } from '../../__generated__/graphql'
 
 export interface ProductsQuery {
   products: Product[]
@@ -25,6 +25,19 @@ export const PRODUCTS = gql`
         id
         name
       }
+    }
+  }
+`
+
+export interface CategoriesQuery {
+  categories: Category[]
+}
+
+export const CATEGORIES = gql`
+  {
+    categories {
+      id
+      name
     }
   }
 `

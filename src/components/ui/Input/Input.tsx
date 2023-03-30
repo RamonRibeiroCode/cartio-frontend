@@ -35,7 +35,7 @@ function Input({
     <div
       className={`relative flex items-center w-full rounded-lg mt-10 ${
         wrapperClassName ?? ''
-      }  ${inFocus ? 'bg-[#e9ecf8e6]' : 'bg-[#eff1f999]'} ${
+      } ${inFocus ? 'bg-[#e9ecf8]' : 'bg-[#F4F5FA]'} ${
         tag === 'textarea' ? 'min-h-[152px]' : 'h-[52px]'
       }`}
     >
