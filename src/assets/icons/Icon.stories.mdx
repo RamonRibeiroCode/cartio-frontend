@@ -1,0 +1,207 @@
+import {
+  Canvas,
+  Meta,
+  Title,
+  IconGallery,
+  IconItem,
+  Description,
+} from "@storybook/addon-docs"
+import { ArrowDown, DoubleArrowLeft, Folder, Logo } from "./General"
+import {   
+  Clock,
+  Date,
+  DateLight,
+  Filter,
+  Logout,
+  Plus,
+  Search,
+  Share,
+  Trash,
+  Upload,
+  UploadBulk,
+  UploadPlaceholder, 
+} from "./Actions"
+import { ImageBulk, Location, Mail, Password, Phone, Profile } from "./Profile"
+import Icon from "../../components/ui/Icon"
+
+
+<Meta
+  title="Design System/Icons"
+  parameters={{ options: { showToolbar: false } }}
+/>
+
+---
+
+## Icons
+
+Os ícones ajudam a criar páginas da web ilustrando conceitos e melhorando a navegação do site.
+
+<br />
+
+Esses são os sprites que utilizaremos dentro e fora do nosso front-end:
+
+`/src/assets/icons/*`
+
+<br />
+
+---
+
+Este projeto usa SVGs de <a href="https://iconly.pro/">Iconly</a>.
+
+---
+
+<br />
+
+#### General
+
+<br />
+
+<IconGallery>
+  <IconItem name="ArrowDown">
+    <ArrowDown color="#5E6366" />
+  </IconItem>
+  <IconItem name="DoubleArrowLeft">
+    <DoubleArrowLeft />
+  </IconItem>
+  <IconItem name="Folder">
+    <Folder color="#5E6366" />
+  </IconItem>
+  <IconItem name="Logo">
+    <Logo />
+  </IconItem>
+</IconGallery>
+
+---
+
+#### Actions
+
+<br />
+
+<IconGallery>
+  <IconItem name="Clock">
+    <Clock />
+  </IconItem>
+  <IconItem name="Date">
+    <Date />
+  </IconItem>
+  <IconItem name="DateLight">
+    <DateLight />
+  </IconItem>
+  <IconItem name="Filter">
+    <Filter />
+  </IconItem>
+  <IconItem name="Logout">
+    <Logout />
+  </IconItem>
+  <IconItem name="Plus">
+    <Plus color="#5E6366" />
+  </IconItem>
+  <IconItem name="Search">
+    <Search />
+  </IconItem>
+  <IconItem name="Share">
+    <Share />
+  </IconItem>
+  <IconItem name="Trash">
+    <Trash />
+  </IconItem>
+  <IconItem name="Upload">
+    <Upload />
+  </IconItem>
+  <IconItem name="UploadBulk">
+    <UploadBulk />
+  </IconItem>
+  <IconItem name="UploadPlaceholder">
+    <UploadPlaceholder />
+  </IconItem>
+</IconGallery>
+
+---
+
+#### Profile
+
+<br />
+
+<IconGallery>
+  <IconItem name="ImageBulk">
+    <ImageBulk />
+  </IconItem>
+  <IconItem name="Location">
+    <Location />
+  </IconItem>
+  <IconItem name="Mail">
+    <Mail />
+  </IconItem>
+  <IconItem name="Password">
+    <Password />
+  </IconItem>
+  <IconItem name="Phone">
+    <Phone />
+  </IconItem>
+  <IconItem name="Profile">
+    <Profile />
+  </IconItem>
+</IconGallery>
+
+---
+
+#### Navigation
+
+<br />
+
+<IconGallery>
+  <IconItem name="Dashboard">
+    <Icon name="Dashboard" />
+  </IconItem>
+  <IconItem name="DashboardBulk">
+    <div className="bg-primary-100"> 
+      <Icon name="DashboardBulk" width={20} height={20} />
+    </div>
+  </IconItem>
+  <IconItem name="Orders">
+    <Icon name="Orders" />
+  </IconItem>
+  <IconItem name="OrdersBulk">
+    <div className="bg-primary-100"> 
+      <Icon name="OrdersBulk" width={20} height={20} />
+    </div>
+  </IconItem>
+  <IconItem name="Customers">
+    <Icon name="Customers" />
+  </IconItem>
+  <IconItem name="CustomersBulk">
+    <div className="bg-primary-100"> 
+      <Icon name="CustomersBulk" width={20} height={20} />
+    </div>
+  </IconItem>
+  <IconItem name="Inventory">
+    <Icon name="Inventory" />
+  </IconItem>
+  <IconItem name="InventoryBulk">
+    <div className="bg-primary-100"> 
+      <Icon name="InventoryBulk" width={20} height={20} />
+    </div>
+  </IconItem>
+  <IconItem name="Conversations">
+    <Icon name="Conversations" />
+  </IconItem>
+  <IconItem name="ConversationsBulk">
+    <div className="bg-primary-100"> 
+      <Icon name="ConversationsBulk" width={20} height={20} />
+    </div>
+  </IconItem>
+    <IconItem name="Settings">
+    <Icon name="Settings" />
+  </IconItem>
+
+  <IconItem name="SettingsBulk">
+    <div className="bg-primary-100"> 
+      <Icon name="SettingsBulk" width={20} height={20} />
+    </div>
+  </IconItem>
+  
+  <IconItem name="Home">
+    <Icon name="Home" />
+  </IconItem>
+</IconGallery>
+

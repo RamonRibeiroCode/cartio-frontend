@@ -24,14 +24,16 @@ export type Category = {
 };
 
 export type CreateProductInput = {
-  categoryId: Scalars['String'];
+  categoryId?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
   expiresIn?: InputMaybe<Scalars['DateTime']>;
-  listPrice: Scalars['Float'];
+  listPrice?: InputMaybe<Scalars['Float']>;
+  mainImage?: InputMaybe<Scalars['Upload']>;
   name: Scalars['String'];
-  quantity: Scalars['Float'];
-  sellingPrice: Scalars['Float'];
+  quantity?: InputMaybe<Scalars['Float']>;
+  sellingPrice?: InputMaybe<Scalars['Float']>;
   status: Scalars['String'];
-  validIn: Scalars['DateTime'];
+  validIn?: InputMaybe<Scalars['DateTime']>;
 };
 
 export type CreateUserInput = {
@@ -86,15 +88,18 @@ export type Product = {
   __typename?: 'Product';
   category: Category;
   categoryId: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
   expiresIn?: Maybe<Scalars['DateTime']>;
   id: Scalars['ID'];
-  listPrice: Scalars['Float'];
+  listPrice?: Maybe<Scalars['Float']>;
+  mainImageKey?: Maybe<Scalars['String']>;
+  mainImageUrl: Scalars['String'];
   name: Scalars['String'];
-  quantity: Scalars['Float'];
-  sellingPrice: Scalars['Float'];
+  quantity?: Maybe<Scalars['Float']>;
+  sellingPrice?: Maybe<Scalars['Float']>;
   slug: Scalars['String'];
   status: Scalars['String'];
-  validIn: Scalars['DateTime'];
+  validIn?: Maybe<Scalars['DateTime']>;
 };
 
 export type Query = {

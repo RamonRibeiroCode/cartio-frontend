@@ -4,21 +4,25 @@ import { Link } from 'react-router-dom'
 import Icon from '../../components/ui/Icon'
 import { PRODUCTS, ProductsQuery } from '../../graphql/queries/inventory'
 import { formatPrice, padWithZeroOnStart } from '../../helpers/format'
-import productImg from '../../assets/product-1.jpg'
+import TableHead from '../../components/Inventory/Table/TableHead'
+import TableData from '../../components/Inventory/Table/TableData'
+import ActionButton from '../../components/Inventory/Table/ActionButton'
+import { ArrowDown, Folder } from '../../assets/icons/General'
+import { Plus, Search } from '../../assets/icons/Actions'
 
-const getColorsForStatus = (status: string) => {
+export const getColorsForStatus = (status: string) => {
   switch (status) {
     case 'Expired':
-      return 'bg-[#cc5f5f33] text-action-red'
+      return 'bg-action-red-transparent text-action-red'
 
     case 'Unpublished':
       return 'bg-secondary-30 text-black-100'
 
     case 'Published':
-      return 'bg-[#5570f129] text-primary-100'
+      return 'bg-primary-transparent text-primary-100'
 
     default:
-      return 'bg-[#5570f129] text-primary-100'
+      return 'bg-primary-transparent text-primary-100'
   }
 }
 
@@ -40,7 +44,7 @@ function InventorySummary() {
   const activePercentage = (activeProductsLength / productsLength) * 100
 
   const productsWithLowStock = products.filter(
-    (product) => product.quantity <= 3
+    (product) => Number(product.quantity) <= 5
   ).length
 
   const expiredProductsLength = products.filter(
@@ -50,15 +54,15 @@ function InventorySummary() {
   return (
     <div className="flex-1 flex flex-col h-full">
       <div className="flex justify-between items-center mb-5">
-        <h1 className="text-black-60 font-medium text-paragraph-1">
+        <h1 className="text-paragraph-1 font-medium text-black-60">
           Inventory Summary
         </h1>
 
         <Link
-          className="flex items-center bg-primary-100 rounded-xl py-[6px] px-5"
+          className="flex items-center bg-primary-100 rounded-xl py-[6px] px-5 hover:bg-primary-80 active:bg-primary-pressed"
           to="/inventory/new"
         >
-          <Icon name="Plus" width={24} height={24} />
+          <Plus width={24} height={24} color="#FFFFFF" />
 
           <span className="ml-2 text-white text-sm">Add a New Product</span>
         </Link>
@@ -67,7 +71,7 @@ function InventorySummary() {
       <div className="flex mb-5">
         <div className="flex-1 bg-primary-100 rounded-xl py-3 px-4 mr-5">
           <div className="flex justify-center items-center w-9 h-9 bg-primary-80 rounded-lg mb-8">
-            <Icon name="Folder" width={20} height={20} />
+            <Folder width={20} height={20} color="#FFFFFF" />
           </div>
 
           <div className="flex">
@@ -131,7 +135,7 @@ function InventorySummary() {
           <div className="flex h-8">
             <div className="flex items-center w-56 h-full rounded-[4px] border border-black-10 p-2 mr-2">
               <button>
-                <Icon name="Search" width={20} height={20} />
+                <Search width={20} height={20} />
               </button>
               <input
                 className="pl-4 flex w-full border-none outline-0 bg-transparent text-xs text-black-60 placeholder:text-[#ABAFB1]"
@@ -141,25 +145,16 @@ function InventorySummary() {
             </div>
 
             <div className="flex gap-x-3">
-              <button className="flex items-center rounded-[4px] border border-black-50 px-2">
-                <Icon name="Filter" width={16} height={17} />
-                <span className="text-label-2 ml-2">Filter</span>
-              </button>
+              <ActionButton iconName="Filter">Filter</ActionButton>
+
+              <ActionButton iconName="Date">Filter</ActionButton>
+
+              <ActionButton iconName="Share">Share</ActionButton>
 
               <button className="flex items-center rounded-[4px] border border-black-50 px-2">
-                <Icon name="Date" width={16} height={17} />
-                <span className="text-label-2 ml-2">Filter</span>
-              </button>
-
-              <button className="flex items-center rounded-[4px] border border-black-50 px-2">
-                <Icon name="Share" width={16} height={17} />
-                <span className="text-label-2 ml-2">Share</span>
-              </button>
-
-              <div className="flex items-center rounded-[4px] border border-black-50 px-2 cursor-pointer">
                 <span className="text-label-2 mr-2">Bulk Action</span>
-                <Icon name="ArrowDown" width={16} height={16} />
-              </div>
+                <ArrowDown width={16} height={16} color="#5E6366" />
+              </button>
             </div>
           </div>
         </div>
@@ -176,18 +171,14 @@ function InventorySummary() {
             <th>
               <div className="opacity-0 cursor-default">Img</div>
             </th>
-            <th className="text-left py-4 text-sm text-black-90">
-              Product Name
-            </th>
-            <th className="text-left py-4 text-sm text-black-90">Category</th>
-            <th className="text-left py-4 text-sm text-black-90">Unit Price</th>
-            <th className="text-left py-4 text-sm text-black-90">In-Stock</th>
-            <th className="text-left py-4 text-sm text-black-90">Discount</th>
-            <th className="text-left py-4 text-sm text-black-90">
-              Total Value
-            </th>
-            <th className="text-left py-4 text-sm text-black-90">Action</th>
-            <th className="text-left py-4 text-sm text-black-90">Status</th>
+            <TableHead>Product Name</TableHead>
+            <TableHead>Category</TableHead>
+            <TableHead>Unit Price</TableHead>
+            <TableHead>In-Stock</TableHead>
+            <TableHead>Discount</TableHead>
+            <TableHead>Total Value</TableHead>
+            <TableHead>Action</TableHead>
+            <TableHead>Status</TableHead>
           </thead>
           <tbody>
             {products.map((product) => {
@@ -199,74 +190,65 @@ function InventorySummary() {
                 quantity,
                 listPrice,
                 status,
+                mainImageUrl,
               } = product
 
               return (
                 <tr key={id}>
-                  <td className="py-2">
+                  <TableData>
                     <div
                       className="w-6 h-6 rounded-lg border border-[#CFD3D4] cursor-pointer"
                       onClick={() => console.log('SELECT ALL TODO')}
                     />
-                  </td>
+                  </TableData>
 
-                  <td className="py-2">
-                    <img src={productImg} alt="" />
-                  </td>
+                  <TableData>
+                    <Link to={`/inventory/${id}`}>
+                      {mainImageUrl ? (
+                        <img
+                          src={mainImageUrl}
+                          alt=""
+                          className="w-9 h-9 rounded-lg border border-[#F1F3F9]"
+                        />
+                      ) : (
+                        <div className="w-9 h-9 rounded-lg border border-[#F1F3F9]" />
+                      )}
+                    </Link>
+                  </TableData>
 
-                  <td className="py-2">
-                    <span className="text-paragraph-2 text-black-40">
-                      {name}
-                    </span>
-                  </td>
+                  <TableData>
+                    <Link to={`/inventory/${id}`}>{name}</Link>
+                  </TableData>
 
-                  <td className="py-2">
-                    <span className="text-paragraph-2 text-black-40">
-                      {category.name}
-                    </span>
-                  </td>
+                  <TableData>{category.name}</TableData>
 
-                  <td className="py-2">
-                    <span className="text-paragraph-2 text-black-40 text-right">
-                      {formatPrice(sellingPrice)}
-                    </span>
-                  </td>
+                  <TableData>{formatPrice(sellingPrice)}</TableData>
 
-                  <td className="py-2">
-                    <span
-                      className={`text-paragraph-2  ${
-                        quantity ? 'text-black-40' : 'text-black-20'
-                      }`}
-                    >
-                      {quantity || 'Out of Stock'}
-                    </span>
-                  </td>
+                  <TableData light={!quantity}>
+                    {quantity || 'Out of Stock'}
+                  </TableData>
 
-                  <td className="py-2">
-                    <span className="text-paragraph-2 text-black-40">
-                      {formatPrice(listPrice - sellingPrice)}
-                    </span>
-                  </td>
+                  <TableData>
+                    {formatPrice(Number(listPrice) - Number(sellingPrice))}
+                  </TableData>
 
-                  <td className="py-2">
-                    <span className="text-paragraph-2 text-black-40">
-                      {formatPrice(sellingPrice * quantity)}
-                    </span>
-                  </td>
+                  <TableData>
+                    {formatPrice(Number(sellingPrice) * Number(quantity))}
+                  </TableData>
 
-                  <td className="py-2">
+                  <TableData>
                     {status !== 'Expired' && (
                       <div className="flex w-fit bg-[#5e636614] py-1 px-3 rounded-md text-paragraph-2 text-black-30 cursor-pointer">
                         <span className="mr-1">
                           {status.substring(0, status.length - 2)}
                         </span>
 
-                        <Icon name="ArrowDown" width={16} height={16} />
+                        <ArrowDown width={16} height={16} color="#5E6366" />
                       </div>
                     )}
-                  </td>
+                  </TableData>
 
-                  <td className="py-2">
+                  <TableData>
                     <span
                       className={`text-paragraph-2 py-1 px-3 rounded-md ${getColorsForStatus(
                         status
@@ -274,7 +256,7 @@ function InventorySummary() {
                     >
                       {status}
                     </span>
-                  </td>
+                  </TableData>
                 </tr>
               )
             })}
