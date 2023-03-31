@@ -39,7 +39,7 @@ function InventoryNew() {
           validIn: dateAddredChecked ? state.dateAddred : undefined,
           expiresIn: dateExpiredChecked ? state.dateExpired : undefined,
           status: status,
-          mainImage: state.mainImage,
+          mainImage: state.mainImage?.file,
         },
       },
     })
@@ -97,7 +97,7 @@ function InventoryNew() {
     dispatch({ type: 'UPDATE_ADDITIONAL_IMAGES', payload: newAdditionalImages })
   }
 
-  console.log(state.additionalImages)
+  console.log(state)
 
   return (
     <div className="flex-1 flex flex-col h-full">
