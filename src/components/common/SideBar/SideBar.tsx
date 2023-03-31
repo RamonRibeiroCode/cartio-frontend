@@ -78,7 +78,7 @@ function SideBar() {
                   to={link.href}
                 >
                   <Icon
-                    name={`${link.name}${active ? 'Active' : ''}`}
+                    name={`${link.name}${active ? 'Bulk' : ''}`}
                     width={24}
                     height={24}
                   />

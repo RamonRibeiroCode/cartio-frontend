@@ -9,11 +9,7 @@ import CurrencyInput from '../../components/ui/Input/CurrencyInput'
 import Upload from '../../components/ui/Upload'
 import { CREATE_PRODUCT } from '../../graphql/mutations/product'
 import { useInventoryItemForm } from '../../hooks/useInventoryItemForm'
-import {
-  Category,
-  MutationCreateProductArgs,
-  Product,
-} from '../../__generated__/graphql'
+import { MutationCreateProductArgs, Product } from '../../__generated__/graphql'
 import { client } from '../../lib/apollo'
 import { PRODUCTS } from '../../graphql/queries/inventory'
 import Select from '../../components/ui/Select'
@@ -141,7 +137,7 @@ function InventoryNew() {
               }
             />
 
-            <Select<Category>
+            <Select
               label="Category"
               placeholder="Select Product Category"
               selected={state.category?.name}

@@ -1,0 +1,10 @@
+* {
+  font-family: "Poppins", -apple-system, system-ui, BlinkMacSystemFont,
+    sans-serif;
+}
+
+ol,
+ul,
+li {
+  list-style: none;
+}

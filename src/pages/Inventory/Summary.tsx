@@ -62,7 +62,7 @@ function InventorySummary() {
           className="flex items-center bg-primary-100 rounded-xl py-[6px] px-5 hover:bg-primary-80 active:bg-primary-pressed"
           to="/inventory/new"
         >
-          <Plus width={24} height={24} />
+          <Plus width={24} height={24} color="#FFFFFF" />
 
           <span className="ml-2 text-white text-sm">Add a New Product</span>
         </Link>
@@ -71,7 +71,7 @@ function InventorySummary() {
       <div className="flex mb-5">
         <div className="flex-1 bg-primary-100 rounded-xl py-3 px-4 mr-5">
           <div className="flex justify-center items-center w-9 h-9 bg-primary-80 rounded-lg mb-8">
-            <Folder width={20} height={20} />
+            <Folder width={20} height={20} color="#FFFFFF" />
           </div>
 
           <div className="flex">

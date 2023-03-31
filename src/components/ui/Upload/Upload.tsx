@@ -60,7 +60,7 @@ function Upload({
               onClick={handleImage}
               disabled={disabled}
             >
-              <IconUpload width={20} height={20} />
+              <IconUpload width={20} height={20} color="#FFFFFF" />
             </button>
 
             <button

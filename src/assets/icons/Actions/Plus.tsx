@@ -1,9 +1,10 @@
 interface PlusProps {
   width: number
   height: number
+  color: string
 }
 
-function Plus({ width, height }: PlusProps) {
+function Plus({ width, height, color }: PlusProps) {
   return (
     <svg
       width={width}
@@ -14,14 +15,14 @@ function Plus({ width, height }: PlusProps) {
     >
       <path
         d="M12 5V19"
-        stroke="white"
+        stroke={color}
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M5 12H19"
-        stroke="white"
+        stroke={color}
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"

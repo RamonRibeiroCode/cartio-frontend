@@ -1,6 +1,7 @@
 interface UploadProps {
   width: number
   height: number
+  color: string
 }
 
 function Upload({ width, height }: UploadProps) {
@@ -12,7 +13,7 @@ function Upload({ width, height }: UploadProps) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clipPath="url(#clip0_229_11536)">
+      <g clipPath="url(#clip0_377_16557)">
         <path
           d="M13.3337 13.3333L10.0003 10L6.66699 13.3333"
           stroke="#1C1D22"
@@ -43,8 +44,8 @@ function Upload({ width, height }: UploadProps) {
         />
       </g>
       <defs>
-        <clipPath id="clip0_229_11536">
-          <rect fill="white" />
+        <clipPath id="clip0_377_16557">
+          <rect width="20" height="20" fill="white" />
         </clipPath>
       </defs>
     </svg>

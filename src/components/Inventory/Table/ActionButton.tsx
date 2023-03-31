@@ -13,7 +13,7 @@ interface ActionButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 function ActionButton({ children, iconName, ...props }: ActionButtonProps) {
   return (
     <button
-      className="flex items-center rounded-[4px] border border-black-50 px-2"
+      className="flex items-center w-full h-full rounded-[4px] border border-black-50 px-2"
       {...props}
     >
       {getActionButtonIconByName(iconName)}
