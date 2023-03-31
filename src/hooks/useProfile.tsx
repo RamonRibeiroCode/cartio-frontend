@@ -23,7 +23,8 @@ interface Action {
     | 'UPDATE_ADDRESS'
     | 'UPDATE_STATE'
     | 'UPDATE_CITY'
-  payload: ProfileType | string
+    | 'UPDATE_IMAGE_PREVIEW'
+  payload: ProfileType | string | undefined
 }
 
 interface ProfileType {
@@ -34,6 +35,7 @@ interface ProfileType {
   state: string
   city: string
   imageUrl?: string
+  imagePreview?: string
 }
 
 const reducer = (state: ProfileType, action: Action) => {
@@ -58,6 +60,9 @@ const reducer = (state: ProfileType, action: Action) => {
 
     case 'UPDATE_CITY':
       return { ...state, city: action.payload as string }
+
+    case 'UPDATE_IMAGE_PREVIEW':
+      return { ...state, imagePreview: action.payload as string }
 
     default:
       return state
@@ -121,7 +126,9 @@ const useProfile = () => {
     return JSON.stringify(storagedProfile) === JSON.stringify(state)
   }
 
-  const handleSelectImageAndUpload = async (file: File) => {
+  const handleSelectImageAndUpload = async (file: File, previewSrc: string) => {
+    dispatch({ type: 'UPDATE_IMAGE_PREVIEW', payload: previewSrc })
+
     await mutateUpdateProfilePicture({
       variables: {
         file: file,
@@ -130,6 +137,8 @@ const useProfile = () => {
   }
 
   const handleDeleteProfilePicture = async () => {
+    dispatch({ type: 'UPDATE_IMAGE_PREVIEW', payload: undefined })
+
     setStoragedProfile((prevUser) => ({ ...prevUser, imageUrl: undefined }))
 
     await mutateDeleteProfilePicture()

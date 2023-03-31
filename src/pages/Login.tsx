@@ -1,9 +1,9 @@
 import { ApolloError } from '@apollo/client'
 import { useState } from 'react'
 
-import Icon from '../components/ui/Icon'
 import Input from '../components/ui/Input'
 import { useAuth } from '../contexts/auth'
+import { Logo } from '../assets/icons/General'
 
 function Login() {
   const [email, setEmail] = useState('user@cartio.com')
@@ -27,12 +27,12 @@ function Login() {
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex items-center px-20 h-20">
-        <Icon name="Logo" width={41} height={40} />
+        <Logo width={41} height={40} />
       </div>
 
       <div className="flex justify-center items-center flex-1 bg-[#F4F5FA]">
         <div className="flex flex-col items-center w-full max-w-md bg-white px-9 py-11 rounded-xl">
-          <Icon name="Logo" width={51} height={50} />
+          <Logo width={51} height={50} />
 
           <h1 className="mt-8 mb-2 text-xl font-medium">Welcome back!</h1>
 

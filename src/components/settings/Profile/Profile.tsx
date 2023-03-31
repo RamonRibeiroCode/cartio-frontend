@@ -144,6 +144,7 @@ function ProfileForm() {
           <Upload
             imageUrl={storagedProfile.imageUrl}
             disabled={updating || deleting}
+            previewSrc={state.imagePreview}
             handleSelectImage={handleSelectImageAndUpload}
             handleDeleteImage={handleDeleteProfilePicture}
           />

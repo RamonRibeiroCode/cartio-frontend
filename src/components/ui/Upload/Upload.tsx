@@ -1,12 +1,16 @@
-import { useState } from 'react'
-
-import Icon from '../Icon'
+import { ImageBulk } from '../../../assets/icons/Profile'
+import {
+  Upload as IconUpload,
+  UploadBulk,
+  Trash,
+} from '../../../assets/icons/Actions'
 
 interface UploadProps {
   variant?: 'normal' | 'large'
   imageUrl?: string
   disabled?: boolean
-  handleSelectImage: (file: File) => void
+  previewSrc?: string
+  handleSelectImage: (file: File, previewSrc: string) => void
   handleDeleteImage: () => void
 }
 
@@ -16,13 +20,12 @@ interface Target extends EventTarget {
 
 function Upload({
   variant = 'normal',
+  previewSrc,
   imageUrl,
   disabled = false,
   handleSelectImage,
   handleDeleteImage,
 }: UploadProps) {
-  const [previewSrc, setPreviewSrc] = useState('')
-
   const handleImage = () => {
     const input = document.createElement('input')
 
@@ -32,25 +35,22 @@ function Upload({
     input.onchange = async (event) => {
       const [file] = (event.target as Target).files
 
-      const reader = new FileReader()
-
-      reader.onload = () => setPreviewSrc(reader.result as string)
-      reader.readAsDataURL(file)
-
-      handleSelectImage(file)
+      handleSelectImage(file, URL.createObjectURL(file))
     }
 
     input.click()
   }
 
   return (
-    <div className="relative">
+    <div
+      className={`relative ${
+        variant === 'large' ? 'w-[372px] h-[372px]' : 'w-[172px] h-[172px]'
+      }`}
+    >
       {imageUrl || previewSrc ? (
         <>
           <img
-            className={`border border-[#E1E2E9] rounded-xl overflow-hidden ${
-              variant === 'large' ? 'w-[372px]' : 'w-[172px]'
-            }`}
+            className="w-full h-full object-cover border border-[#E1E2E9] rounded-xl overflow-hidden"
             src={previewSrc || imageUrl}
             alt="Profile"
           />
@@ -60,18 +60,17 @@ function Upload({
               onClick={handleImage}
               disabled={disabled}
             >
-              <Icon name="Upload" width={20} height={20} />
+              <IconUpload width={20} height={20} />
             </button>
 
             <button
               className="w-8 h-8 flex justify-center items-center bg-secondary-30 rounded-lg ml-1 disabled:bg-black-10 disabled:opacity-60 disabled:cursor-not-allowed"
               disabled={disabled}
               onClick={() => {
-                setPreviewSrc('')
                 handleDeleteImage()
               }}
             >
-              <Icon name="Trash" width={20} height={20} />
+              <Trash width={20} height={20} />
             </button>
           </div>
         </>
@@ -82,11 +81,10 @@ function Upload({
             variant === 'large' ? 'w-[372px] h-[372px]' : 'w-[172px] h-[172px]'
           }`}
         >
-          <Icon name="ImagePrimary" width={56} height={56} />
+          <ImageBulk width={56} height={56} />
 
           <div className="flex items-center mt-3">
-            <Icon
-              name="UploadPrimary"
+            <UploadBulk
               width={variant === 'large' ? 20 : 17}
               height={variant === 'large' ? 20 : 17}
             />

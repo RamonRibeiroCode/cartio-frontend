@@ -6,7 +6,7 @@ import DatePicker, {
 import { globalCss } from '@stitches/react'
 import ptBR from 'date-fns/locale/pt-BR'
 
-import Icon from '../Icon'
+import { DateLight, Clock } from '../../../assets/icons/Actions'
 
 import 'react-datepicker/dist/react-datepicker.css'
 
@@ -53,12 +53,14 @@ function UIDatePicker({ type, ...otherProps }: DatePickerProps) {
         inFocus ? 'bg-[#e9ecf8] border-2 border-primary-10' : 'bg-[#F4F5FA]'
       } ${globalStyles()}`}
     >
-      <Icon
-        className="mr-4 absolute left-4"
-        name={type === 'date' ? 'DateLight' : 'Clock'}
-        width={24}
-        height={24}
-      />
+      <div className="mr-4 absolute left-4">
+        {type === 'date' ? (
+          <DateLight width={24} height={24} />
+        ) : (
+          <Clock width={24} height={24} />
+        )}
+      </div>
+
       <DatePicker
         {...otherProps}
         locale="pt-BR"

@@ -16,7 +16,16 @@ interface Action {
     | 'UPDATE_DATETIME_ADDRED'
     | 'UPDATE_DATETIME_EXPIRED'
     | 'UPDATE_MAIN_IMAGE'
-  payload: ProductType | string | Category | number | Date | File | undefined
+    | 'UPDATE_ADDITIONAL_IMAGES'
+  payload:
+    | ProductType
+    | string
+    | Category
+    | number
+    | Date
+    | Image
+    | Image[]
+    | undefined
 }
 
 interface ProductType {
@@ -28,7 +37,8 @@ interface ProductType {
   description: string
   dateAddred?: Date
   dateExpired?: Date
-  mainImage?: File
+  mainImage?: Image
+  additionalImages: Image[]
 }
 
 const reducer = (state: ProductType, action: Action) => {
@@ -61,11 +71,20 @@ const reducer = (state: ProductType, action: Action) => {
       return { ...state, dateExpired: action.payload as Date }
 
     case 'UPDATE_MAIN_IMAGE':
-      return { ...state, mainImage: action.payload as File }
+      return { ...state, mainImage: action.payload as Image }
+
+    case 'UPDATE_ADDITIONAL_IMAGES':
+      return { ...state, additionalImages: action.payload as Image[] }
 
     default:
       return state
   }
+}
+
+interface Image {
+  file?: File
+  previewSrc?: string
+  imageUrl?: string
 }
 
 const initialState = {
@@ -79,6 +98,7 @@ const initialState = {
   sellingPrice: 10.99,
   quantity: 12,
   dateAddred: new Date(),
+  additionalImages: [],
 }
 
 const useInventoryItemForm = (productId?: string) => {

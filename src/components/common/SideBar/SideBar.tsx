@@ -1,8 +1,10 @@
 import { Link, useLocation } from 'react-router-dom'
 
+import Icon from '../../ui/Icon'
 import { useAuth } from '../../../contexts/auth'
 import { useSidebar } from '../../../contexts/sidebar'
-import Icon from '../../ui/Icon'
+import { Logo, DoubleArrowLeft } from '../../../assets/icons/General'
+import { Logout } from '../../../assets/icons/Actions'
 
 const links = [
   {
@@ -48,7 +50,7 @@ function SideBar() {
           collapsed ? 'justify-center' : ''
         }`}
       >
-        <Icon name="Logo" width={43} height={43} />
+        <Logo width={43} height={43} />
 
         {!collapsed && (
           <span className="text-sub-heading-3 font-bold text-black-60 ml-3">
@@ -103,9 +105,8 @@ function SideBar() {
         }`}
         onClick={() => setCollapsed((prevCollapsed) => !prevCollapsed)}
       >
-        <Icon
+        <DoubleArrowLeft
           className={collapsed ? 'rotate-180' : ''}
-          name="DoubleArrowLeft"
           width={24}
           height={24}
         />
@@ -121,7 +122,7 @@ function SideBar() {
         }`}
         onClick={handleLogout}
       >
-        <Icon name="Logout" width={24} height={24} />
+        <Logout width={24} height={24} />
 
         {!collapsed && (
           <span className="ml-4 text-paragraph-2 text-action-red">Logout</span>

@@ -17,6 +17,7 @@ import {
 import { client } from '../../lib/apollo'
 import { PRODUCTS } from '../../graphql/queries/inventory'
 import Select from '../../components/ui/Select'
+import { UploadPlaceholder } from '../../assets/icons/Actions'
 
 function InventoryNew() {
   const [dateAddredChecked, setDateAddredChecked] = useState(true)
@@ -75,6 +76,32 @@ function InventoryNew() {
 
     saveProduct('Published')
   }
+
+  const handleAddAdditionalImage = (
+    file: File,
+    previewSrc: string,
+    index: number
+  ) => {
+    const newAdditionalImages = [...state.additionalImages]
+
+    newAdditionalImages[index] = {
+      file,
+      previewSrc,
+      ...newAdditionalImages[index],
+    }
+
+    dispatch({ type: 'UPDATE_ADDITIONAL_IMAGES', payload: newAdditionalImages })
+  }
+
+  const handleDeleteAdditionalImage = (indexToDelete: number) => {
+    const newAdditionalImages = state.additionalImages.filter(
+      (_, currentIndex) => currentIndex !== indexToDelete
+    )
+
+    dispatch({ type: 'UPDATE_ADDITIONAL_IMAGES', payload: newAdditionalImages })
+  }
+
+  console.log(state.additionalImages)
 
   return (
     <div className="flex-1 flex flex-col h-full">
@@ -320,15 +347,47 @@ function InventoryNew() {
         <div className="bg-white rounded-lg p-5">
           <Upload
             variant="large"
-            handleSelectImage={(file) => {
-              dispatch({ type: 'UPDATE_MAIN_IMAGE', payload: file })
+            previewSrc={state.mainImage?.previewSrc}
+            handleSelectImage={(file, previewSrc) => {
+              dispatch({
+                type: 'UPDATE_MAIN_IMAGE',
+                payload: { file, previewSrc },
+              })
             }}
             handleDeleteImage={() => {
               dispatch({ type: 'UPDATE_MAIN_IMAGE', payload: undefined })
             }}
           />
 
-          <div className="flex justify-between my-3">{/* <Upload /> */}</div>
+          <div className="mt-3">
+            <span className="text-paragraph-1 font-medium text-black-60">
+              Additional Images
+            </span>
+
+            <div className="flex justify-between flex-wrap max-w-[372px] gap-y-7 mt-3">
+              {[...state.additionalImages, {}]?.map((image, index) => {
+                if (index >= 4) {
+                  return <></>
+                }
+
+                return (
+                  <Upload
+                    key={index}
+                    previewSrc={image.previewSrc}
+                    imageUrl={image.imageUrl}
+                    handleSelectImage={(file, previewSrc) =>
+                      handleAddAdditionalImage(file, previewSrc, index)
+                    }
+                    handleDeleteImage={() => handleDeleteAdditionalImage(index)}
+                  />
+                )
+              })}
+
+              {state.additionalImages.length < 3 && (
+                <UploadPlaceholder width={172} height={172} />
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>

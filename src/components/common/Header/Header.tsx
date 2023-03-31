@@ -1,10 +1,10 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 
-import Icon from '../../ui/Icon'
 import Breadcrumb from '../Breadcrumb'
 import { useAuth } from '../../../contexts/auth'
 import { PROFILE, ProfileQuery } from '../../../graphql/queries/user'
+import { ImageBulk } from '../../../assets/icons/Profile'
 
 function Header() {
   const { user } = useAuth()
@@ -34,7 +34,7 @@ function Header() {
               />
             ) : (
               <div className="flex justify-center items-center w-8 h-8 rounded-md bg-[#F4F5FA]">
-                <Icon name="ImagePrimary" width={12} height={12} />
+                <ImageBulk width={24} height={24} />
               </div>
             )}
           </div>

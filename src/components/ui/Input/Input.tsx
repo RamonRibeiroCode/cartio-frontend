@@ -1,10 +1,10 @@
 import React, { InputHTMLAttributes, useState } from 'react'
 
-import Icon from '../Icon'
+import { InputIcons, getInputIconByName } from '../../../helpers/icons'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string
-  icon?: string
+  icon?: InputIcons
   wrapperClassName?: string
   tag?: 'input' | 'textarea'
 }
@@ -49,7 +49,7 @@ function Input({
       </label>
 
       {icon && (
-        <Icon name={icon} className="absolute left-4" width={24} height={24} />
+        <div className="absolute left-4">{getInputIconByName(icon)}</div>
       )}
 
       {input}

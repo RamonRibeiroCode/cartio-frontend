@@ -7,6 +7,8 @@ import { formatPrice, padWithZeroOnStart } from '../../helpers/format'
 import TableHead from '../../components/Inventory/Table/TableHead'
 import TableData from '../../components/Inventory/Table/TableData'
 import ActionButton from '../../components/Inventory/Table/ActionButton'
+import { ArrowDown, Folder } from '../../assets/icons/General'
+import { Plus, Search } from '../../assets/icons/Actions'
 
 export const getColorsForStatus = (status: string) => {
   switch (status) {
@@ -60,7 +62,7 @@ function InventorySummary() {
           className="flex items-center bg-primary-100 rounded-xl py-[6px] px-5 hover:bg-primary-80 active:bg-primary-pressed"
           to="/inventory/new"
         >
-          <Icon name="Plus" width={24} height={24} />
+          <Plus width={24} height={24} />
 
           <span className="ml-2 text-white text-sm">Add a New Product</span>
         </Link>
@@ -69,7 +71,7 @@ function InventorySummary() {
       <div className="flex mb-5">
         <div className="flex-1 bg-primary-100 rounded-xl py-3 px-4 mr-5">
           <div className="flex justify-center items-center w-9 h-9 bg-primary-80 rounded-lg mb-8">
-            <Icon name="Folder" width={20} height={20} />
+            <Folder width={20} height={20} />
           </div>
 
           <div className="flex">
@@ -133,7 +135,7 @@ function InventorySummary() {
           <div className="flex h-8">
             <div className="flex items-center w-56 h-full rounded-[4px] border border-black-10 p-2 mr-2">
               <button>
-                <Icon name="Search" width={20} height={20} />
+                <Search width={20} height={20} />
               </button>
               <input
                 className="pl-4 flex w-full border-none outline-0 bg-transparent text-xs text-black-60 placeholder:text-[#ABAFB1]"
@@ -151,7 +153,7 @@ function InventorySummary() {
 
               <button className="flex items-center rounded-[4px] border border-black-50 px-2">
                 <span className="text-label-2 mr-2">Bulk Action</span>
-                <Icon name="ArrowDown" width={16} height={16} />
+                <ArrowDown width={16} height={16} color="#5E6366" />
               </button>
             </div>
           </div>
@@ -241,7 +243,7 @@ function InventorySummary() {
                           {status.substring(0, status.length - 2)}
                         </span>
 
-                        <Icon name="ArrowDown" width={16} height={16} />
+                        <ArrowDown width={16} height={16} color="#5E6366" />
                       </div>
                     )}
                   </TableData>

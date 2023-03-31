@@ -1,10 +1,13 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react'
 
-import Icon from '../../ui/Icon'
+import {
+  ActionButtonIcons,
+  getActionButtonIconByName,
+} from '../../../helpers/icons'
 
 interface ActionButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode
-  iconName: string
+  iconName: ActionButtonIcons
 }
 
 function ActionButton({ children, iconName, ...props }: ActionButtonProps) {
@@ -13,7 +16,7 @@ function ActionButton({ children, iconName, ...props }: ActionButtonProps) {
       className="flex items-center rounded-[4px] border border-black-50 px-2"
       {...props}
     >
-      <Icon name={iconName} width={16} height={17} />
+      {getActionButtonIconByName(iconName)}
       <span className="text-label-2 ml-2">{children}</span>
     </button>
   )

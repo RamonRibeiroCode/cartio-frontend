@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import Icon from '../Icon'
+import { ArrowDown } from '../../../assets/icons/General'
 
 interface Option<ValueType> {
   label: string
@@ -51,17 +51,19 @@ function Select<ValueType>({
           {selected ?? placeholder}
         </span>
 
-        <Icon
+        <ArrowDown
           className={opened ? 'rotate-180' : ''}
-          name="ArrowDown"
           width={24}
           height={24}
+          color="#5E6366"
         />
       </button>
 
       <div
         className={`flex flex-col items-start w-full bg-[#e9ecf8] border border-t-0 border-primary-10 rounded-b-lg absolute top-full z-20 ${
-          opened ? 'opacity-100' : 'opacity-0'
+          opened
+            ? 'opacity-100 pointer-events-auto'
+            : 'opacity-0 pointer-events-none'
         }`}
       >
         {options.map((option) => {
