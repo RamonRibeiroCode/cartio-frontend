@@ -74,7 +74,7 @@ function Select<ValueType>({
           return (
             <button
               key={option.label}
-              className="flex justify-start items-center w-full px-4 h-[52px] text-[#ABAFB1]  hover:bg-white hover:text-primary-100 last:rounded-b-lg"
+              className="flex justify-start items-center w-full px-4 h-[52px] text-[#ABAFB1] hover:bg-white hover:text-primary-100 last:rounded-b-lg"
               onClick={() => {
                 setOpened(false)
                 onSelect(option.value)

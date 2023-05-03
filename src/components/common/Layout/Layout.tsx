@@ -15,7 +15,9 @@ function Layout({ children }: LayoutProps) {
       <div className="flex flex-col flex-1">
         <Header />
 
-        <main className="flex-1 bg-[#F4F5FA] p-5">{children}</main>
+        <main className="flex flex-col h-[calc(100vh_-_80px)] overflow-y-auto bg-[#F4F5FA] p-5">
+          {children}
+        </main>
       </div>
     </div>
   )

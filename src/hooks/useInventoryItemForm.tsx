@@ -90,7 +90,7 @@ interface Image {
 const initialState = {
   name: 'Iphone 14 Pro Max',
   category: {
-    id: '9fe23c7f-862e-4e2c-8b5e-89c7d8d49e4d',
+    id: 'af87eebc-f23c-4645-822d-07c733130e28',
     name: 'Gadgets',
   },
   description: 'Descrição qualquer por aqui',

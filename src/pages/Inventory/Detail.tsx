@@ -4,7 +4,7 @@ function InventoryDetail() {
   const params = useParams()
 
   return (
-    <div className="flex-1 flex flex-col h-full">
+    <div className="flex-1 flex flex-col">
       <div className="flex justify-between items-center mb-5">
         <h1 className="text-paragraph-1 font-medium text-black-60">
           Inventory Detail

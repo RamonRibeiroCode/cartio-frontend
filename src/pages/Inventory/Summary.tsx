@@ -1,14 +1,14 @@
 import { useQuery } from '@apollo/client'
 import { Link } from 'react-router-dom'
 
+import { Plus, Search } from '../../assets/icons/Actions'
+import { ArrowDown, Folder } from '../../assets/icons/General'
+import ActionButton from '../../components/inventory/Table/ActionButton'
+import TableData from '../../components/inventory/Table/TableData'
+import TableHead from '../../components/inventory/Table/TableHead'
 import Icon from '../../components/ui/Icon'
 import { PRODUCTS, ProductsQuery } from '../../graphql/queries/inventory'
 import { formatPrice, padWithZeroOnStart } from '../../helpers/format'
-import TableHead from '../../components/Inventory/Table/TableHead'
-import TableData from '../../components/Inventory/Table/TableData'
-import ActionButton from '../../components/Inventory/Table/ActionButton'
-import { ArrowDown, Folder } from '../../assets/icons/General'
-import { Plus, Search } from '../../assets/icons/Actions'
 
 export const getColorsForStatus = (status: string) => {
   switch (status) {
@@ -52,7 +52,7 @@ function InventorySummary() {
   ).length
 
   return (
-    <div className="flex-1 flex flex-col h-full">
+    <div className="flex-1 flex flex-col">
       <div className="flex justify-between items-center mb-5">
         <h1 className="text-paragraph-1 font-medium text-black-60">
           Inventory Summary

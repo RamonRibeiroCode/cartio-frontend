@@ -6,13 +6,13 @@ import Input from '../../components/ui/Input'
 import Toggle from '../../components/ui/Toggle'
 import DatePicker from '../../components/ui/DatePicker'
 import CurrencyInput from '../../components/ui/Input/CurrencyInput'
+import Select from '../../components/ui/Select'
 import Upload from '../../components/ui/Upload'
 import { CREATE_PRODUCT } from '../../graphql/mutations/product'
 import { useInventoryItemForm } from '../../hooks/useInventoryItemForm'
 import { MutationCreateProductArgs, Product } from '../../__generated__/graphql'
 import { client } from '../../lib/apollo'
 import { PRODUCTS } from '../../graphql/queries/inventory'
-import Select from '../../components/ui/Select'
 import { UploadPlaceholder } from '../../assets/icons/Actions'
 
 function InventoryNew() {
@@ -27,6 +27,10 @@ function InventoryNew() {
   const navigate = useNavigate()
 
   const saveProduct = async (status: string) => {
+    const additionalImagesFiles = state.additionalImages.map(
+      (image) => image.file
+    )
+
     await createProduct({
       variables: {
         createProductInput: {
@@ -40,6 +44,7 @@ function InventoryNew() {
           expiresIn: dateExpiredChecked ? state.dateExpired : undefined,
           status: status,
           mainImage: state.mainImage?.file,
+          additionalImages: additionalImagesFiles,
         },
       },
     })
@@ -97,10 +102,8 @@ function InventoryNew() {
     dispatch({ type: 'UPDATE_ADDITIONAL_IMAGES', payload: newAdditionalImages })
   }
 
-  console.log(state)
-
   return (
-    <div className="flex-1 flex flex-col h-full">
+    <div className="flex-1 flex flex-col">
       <div className="flex justify-between items-center mb-5">
         <h1 className="text-paragraph-1 font-medium text-black-60">
           New Inventory Item

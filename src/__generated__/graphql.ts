@@ -24,6 +24,7 @@ export type Category = {
 };
 
 export type CreateProductInput = {
+  additionalImages?: InputMaybe<Scalars['Upload']>;
   categoryId?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   expiresIn?: InputMaybe<Scalars['DateTime']>;
@@ -93,7 +94,7 @@ export type Product = {
   id: Scalars['ID'];
   listPrice?: Maybe<Scalars['Float']>;
   mainImageKey?: Maybe<Scalars['String']>;
-  mainImageUrl: Scalars['String'];
+  mainImageUrl?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   quantity?: Maybe<Scalars['Float']>;
   sellingPrice?: Maybe<Scalars['Float']>;

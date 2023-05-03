@@ -1,13 +1,13 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 
-import Dashboard from '../pages/Dashboard'
-import Orders from '../pages/Orders'
-import Customers from '../pages/Customers'
 import Conversations from '../pages/Conversations'
-import Settings from '../pages/Settings'
-import InventorySummary from '../pages/Inventory/Summary'
-import InventoryNew from '../pages/Inventory/New'
+import Customers from '../pages/Customers'
+import Dashboard from '../pages/Dashboard'
 import InventoryDetail from '../pages/Inventory/Detail'
+import InventoryNew from '../pages/Inventory/New'
+import InventorySummary from '../pages/Inventory/Summary'
+import Orders from '../pages/Orders'
+import Settings from '../pages/Settings'
 
 const AuthRoutes = () => (
   <Routes>
