@@ -50,6 +50,7 @@ export type Mutation = {
   createUser: UserWithoutPassword;
   deleteProfilePicture: UserWithoutPassword;
   signin: SigninResponse;
+  updateProduct: Product;
   updateProfilePicture: UserWithoutPassword;
   updateUser: UserWithoutPassword;
 };
@@ -73,6 +74,12 @@ export type MutationCreateUserArgs = {
 export type MutationSigninArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
+};
+
+
+export type MutationUpdateProductArgs = {
+  id: Scalars['String'];
+  updateProductInput: UpdateProductInput;
 };
 
 
@@ -125,6 +132,18 @@ export type SigninResponse = {
   email: Scalars['String'];
   name: Scalars['String'];
   token: Scalars['String'];
+};
+
+export type UpdateProductInput = {
+  categoryId?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  expiresIn?: InputMaybe<Scalars['DateTime']>;
+  listPrice?: InputMaybe<Scalars['Float']>;
+  name: Scalars['String'];
+  quantity?: InputMaybe<Scalars['Float']>;
+  sellingPrice?: InputMaybe<Scalars['Float']>;
+  status: Scalars['String'];
+  validIn?: InputMaybe<Scalars['DateTime']>;
 };
 
 export type UpdateUserInput = {

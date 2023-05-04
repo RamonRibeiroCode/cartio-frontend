@@ -8,6 +8,7 @@ import InventoryNew from '../pages/Inventory/New'
 import InventorySummary from '../pages/Inventory/Summary'
 import Orders from '../pages/Orders'
 import Settings from '../pages/Settings'
+import InventoryEdit from '../pages/Inventory/Edit'
 
 const AuthRoutes = () => (
   <Routes>
@@ -20,6 +21,7 @@ const AuthRoutes = () => (
     <Route path="/inventory" element={<InventorySummary />} />
     <Route path="/inventory/new" element={<InventoryNew />} />
     <Route path="/inventory/:id" element={<InventoryDetail />} />
+    <Route path="/inventory/:id/edit" element={<InventoryEdit />} />
 
     <Route path="/conversations" element={<Conversations />} />
 

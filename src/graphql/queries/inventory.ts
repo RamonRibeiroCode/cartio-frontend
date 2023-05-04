@@ -49,6 +49,10 @@ export const PRODUCT = gql`
       mainImageUrl
       additionalImageUrls
       createdAt
+      category {
+        id
+        name
+      }
     }
   }
 `

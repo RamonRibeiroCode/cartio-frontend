@@ -1,12 +1,17 @@
-import { useQuery } from '@apollo/client'
-import { useReducer } from 'react'
+import { useLazyQuery, useQuery } from '@apollo/client'
+import { useCallback, useEffect, useReducer, useState } from 'react'
 
-import { CATEGORIES, CategoriesQuery } from '../graphql/queries/inventory'
+import {
+  CATEGORIES,
+  CategoriesQuery,
+  PRODUCT,
+  ProductQuery,
+} from '../graphql/queries/inventory'
 import { Category } from '../__generated__/graphql'
 
-interface Action {
+export interface Action {
   type:
-    | 'SET_INITIAL_PROFILE'
+    | 'SET_PRODUCT'
     | 'UPDATE_NAME'
     | 'UPDATE_CATEGORY'
     | 'UPDATE_SELLING_PRICE'
@@ -28,7 +33,7 @@ interface Action {
     | undefined
 }
 
-interface ProductType {
+export interface ProductType {
   name: string
   category?: Category
   sellingPrice?: number
@@ -43,7 +48,7 @@ interface ProductType {
 
 const reducer = (state: ProductType, action: Action) => {
   switch (action.type) {
-    case 'SET_INITIAL_PROFILE':
+    case 'SET_PRODUCT':
       return { ...(action.payload as ProductType) }
 
     case 'UPDATE_NAME':
@@ -88,24 +93,77 @@ interface Image {
 }
 
 const initialState = {
-  name: 'Iphone 14 Pro Max',
-  category: {
-    id: 'af87eebc-f23c-4645-822d-07c733130e28',
-    name: 'Gadgets',
-  },
-  description: 'Descrição qualquer por aqui',
-  listPrice: 10.99,
-  sellingPrice: 10.99,
-  quantity: 12,
+  name: '',
+  category: undefined,
+  description: '',
+  listPrice: undefined,
+  sellingPrice: undefined,
+  quantity: undefined,
   dateAddred: new Date(),
   additionalImages: [],
 }
 
-const useInventoryItemForm = (productId?: string) => {
+const useInventoryForm = (productId?: string) => {
   const [state, dispatch] = useReducer(reducer, { ...initialState })
   const { data } = useQuery<CategoriesQuery>(CATEGORIES)
+  const [getProduct] = useLazyQuery<ProductQuery>(PRODUCT)
+  const [editFormIsLoading, setEditFormIsLoading] = useState(true)
 
-  return { state, dispatch, categories: data?.categories ?? [] }
+  const getInitialProduct = useCallback(async () => {
+    const productQuery = await getProduct({
+      variables: {
+        id: productId,
+      },
+    })
+
+    if (productQuery.data?.product) {
+      const {
+        name,
+        description,
+        category,
+        validIn,
+        expiresIn,
+        listPrice,
+        sellingPrice,
+        quantity,
+        additionalImageUrls,
+        mainImageUrl,
+      } = productQuery.data.product
+
+      dispatch({
+        type: 'SET_PRODUCT',
+        payload: {
+          name,
+          description,
+          category,
+          dateAddred: validIn ? new Date(validIn) : undefined,
+          dateExpired: expiresIn ? new Date(expiresIn) : undefined,
+          listPrice,
+          sellingPrice,
+          quantity,
+          mainImage: {
+            previewSrc: mainImageUrl,
+          },
+          additionalImages: additionalImageUrls.map((imageUrl) => ({
+            previewSrc: imageUrl,
+          })),
+        } as ProductType,
+      })
+
+      setEditFormIsLoading(false)
+    }
+  }, [getProduct, productId])
+
+  useEffect(() => {
+    getInitialProduct()
+  }, [getInitialProduct])
+
+  return {
+    state,
+    dispatch,
+    categories: data?.categories ?? [],
+    editFormIsLoading,
+  }
 }
 
-export { useInventoryItemForm }
+export { useInventoryForm }

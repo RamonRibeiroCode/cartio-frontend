@@ -16,7 +16,7 @@ import {
 
 interface Action {
   type:
-    | 'SET_INITIAL_PROFILE'
+    | 'SET_PROFILE'
     | 'UPDATE_NAME'
     | 'UPDATE_EMAIL'
     | 'UPDATE_PHONE'
@@ -40,7 +40,7 @@ interface ProfileType {
 
 const reducer = (state: ProfileType, action: Action) => {
   switch (action.type) {
-    case 'SET_INITIAL_PROFILE':
+    case 'SET_PROFILE':
       return { ...(action.payload as ProfileType) }
 
     case 'UPDATE_NAME':
@@ -100,7 +100,7 @@ const useProfile = () => {
   const [state, dispatch] = useReducer(reducer, { ...initialState })
 
   const handleCancelUpdate = () => {
-    dispatch({ type: 'SET_INITIAL_PROFILE', payload: storagedProfile })
+    dispatch({ type: 'SET_PROFILE', payload: storagedProfile })
   }
 
   const handleUpdateProfile = (e: FormEvent<HTMLFormElement>) => {
@@ -161,7 +161,7 @@ const useProfile = () => {
 
       setStoragedProfile(profile)
 
-      dispatch({ type: 'SET_INITIAL_PROFILE', payload: profile })
+      dispatch({ type: 'SET_PROFILE', payload: profile })
     }
   }, [data])
 

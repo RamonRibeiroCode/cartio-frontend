@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 import { PRODUCT, ProductQuery } from '../../graphql/queries/inventory'
 import Button from '../../components/ui/Button'
@@ -10,7 +10,6 @@ import TableData from '../../components/ui/Table/TableData'
 import TableHead from '../../components/ui/Table/TableHead'
 import { Search } from '../../assets/icons/Actions'
 import ActionButton from '../../components/ui/Table/ActionButton'
-import { ArrowDown } from '../../assets/icons/General'
 
 const orders = [
   {
@@ -24,6 +23,7 @@ const orders = [
 ]
 
 function InventoryDetail() {
+  const navigate = useNavigate()
   const params = useParams()
   const { data } = useQuery<ProductQuery>(PRODUCT, {
     variables: { id: params.id },
@@ -65,7 +65,11 @@ function InventoryDetail() {
         </div>
 
         <div className="flex items-center">
-          <Button color="black" extraClasses="mr-6">
+          <Button
+            color="black"
+            extraClasses="mr-6"
+            onClick={() => navigate(`/inventory/${params.id}/edit`)}
+          >
             Edit Product
           </Button>
 
@@ -202,11 +206,6 @@ function InventoryDetail() {
               <ActionButton iconName="Filter">Filter</ActionButton>
 
               <ActionButton iconName="Date">Filter</ActionButton>
-
-              <button className="min-w-[102px] flex items-center rounded-[4px] border border-black-50 px-2">
-                <span className="text-label-2 mr-2">Bulk Action</span>
-                <ArrowDown width={16} height={16} color="#5E6366" />
-              </button>
             </div>
           </div>
         </div>

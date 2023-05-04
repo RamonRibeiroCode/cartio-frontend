@@ -7,3 +7,14 @@ export const CREATE_PRODUCT = gql`
     }
   }
 `
+
+export const UPDATE_PRODUCT = gql`
+  mutation UPDATE_PRODUCT(
+    $id: String!
+    $updateProductInput: UpdateProductInput!
+  ) {
+    updateProduct(id: $id, updateProductInput: $updateProductInput) {
+      name
+    }
+  }
+`
