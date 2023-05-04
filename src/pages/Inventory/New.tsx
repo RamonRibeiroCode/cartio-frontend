@@ -14,6 +14,7 @@ import { MutationCreateProductArgs, Product } from '../../__generated__/graphql'
 import { client } from '../../lib/apollo'
 import { PRODUCTS } from '../../graphql/queries/inventory'
 import { UploadPlaceholder } from '../../assets/icons/Actions'
+import Button from '../../components/ui/Button'
 
 function InventoryNew() {
   const [dateAddredChecked, setDateAddredChecked] = useState(true)
@@ -110,19 +111,17 @@ function InventoryNew() {
         </h1>
 
         <div className="flex">
-          <button
-            className="flex items-center bg-black-90 rounded-xl py-[6px] px-5 hover:bg-black-60 active:bg-black-100"
-            onClick={handleSaveProductAsDraft}
-          >
-            <span className="text-white text-sm">Save as draft</span>
-          </button>
+          <Button color="black" onClick={handleSaveProductAsDraft}>
+            Save as draft
+          </Button>
 
-          <button
-            className="flex items-center bg-primary-100 rounded-xl py-[6px] px-5 ml-6 hover:bg-primary-80 active:bg-primary-pressed"
+          <Button
+            color="primary"
+            extraClasses="ml-6"
             onClick={handleCreateProduct}
           >
-            <span className="text-white text-sm">Save & Publish</span>
-          </button>
+            Save & Publish
+          </Button>
         </div>
       </div>
 

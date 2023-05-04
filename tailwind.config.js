@@ -33,8 +33,8 @@ module.exports = {
           30: '#B6BFE8',
           20: '#C4CAE8',
           10: '#DBDEEE',
-          transparent: "#5570f129",
-          pressed: "#5B6EC6"
+          transparent: '#5570f129',
+          pressed: '#5B6EC6',
         },
         secondary: {
           100: '#FFCC91',
@@ -62,11 +62,14 @@ module.exports = {
         },
         action: {
           green: '#519C66',
-          "red-transparent": "#cc5f5f33",
+          'green-transparent': '#32936f29',
           red: '#CC5F5F',
+          'red-transparent': '#cc5f5f33',
         },
       },
-      spacing: {},
+      boxShadow: {
+        pressed: '0px 4px 20px 0px #00000033 inset',
+      },
     },
   },
   plugins: [],

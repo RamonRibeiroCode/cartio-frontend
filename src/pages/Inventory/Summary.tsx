@@ -3,28 +3,13 @@ import { Link } from 'react-router-dom'
 
 import { Plus, Search } from '../../assets/icons/Actions'
 import { ArrowDown, Folder } from '../../assets/icons/General'
-import ActionButton from '../../components/inventory/Table/ActionButton'
-import TableData from '../../components/inventory/Table/TableData'
-import TableHead from '../../components/inventory/Table/TableHead'
+import ActionButton from '../../components/ui/Table/ActionButton'
+import TableData from '../../components/ui/Table/TableData'
+import TableHead from '../../components/ui/Table/TableHead'
 import Icon from '../../components/ui/Icon'
 import { PRODUCTS, ProductsQuery } from '../../graphql/queries/inventory'
 import { formatPrice, padWithZeroOnStart } from '../../helpers/format'
-
-export const getColorsForStatus = (status: string) => {
-  switch (status) {
-    case 'Expired':
-      return 'bg-action-red-transparent text-action-red'
-
-    case 'Unpublished':
-      return 'bg-secondary-30 text-black-100'
-
-    case 'Published':
-      return 'bg-primary-transparent text-primary-100'
-
-    default:
-      return 'bg-primary-transparent text-primary-100'
-  }
-}
+import { ProductStatus } from '../../components/ui/Status'
 
 function InventorySummary() {
   const { data } = useQuery<ProductsQuery>(PRODUCTS)
@@ -59,7 +44,7 @@ function InventorySummary() {
         </h1>
 
         <Link
-          className="flex items-center bg-primary-100 rounded-xl py-[6px] px-5 hover:bg-primary-80 active:bg-primary-pressed"
+          className="flex items-center bg-primary-100 rounded-xl py-[6px] px-5 hover:bg-primary-80 active:bg-primary-pressed active:shadow-pressed"
           to="/inventory/new"
         >
           <Plus width={24} height={24} color="#FFFFFF" />
@@ -69,8 +54,8 @@ function InventorySummary() {
       </div>
 
       <div className="flex mb-5">
-        <div className="flex-1 bg-primary-100 rounded-xl py-3 px-4 mr-5">
-          <div className="flex justify-center items-center w-9 h-9 bg-primary-80 rounded-lg mb-8">
+        <div className="flex flex-col flex-1 h-36 bg-primary-100 rounded-xl py-3 px-4 mr-5">
+          <div className="flex justify-center items-center w-9 h-9 bg-primary-80 rounded-lg mb-auto">
             <Folder width={20} height={20} color="#FFFFFF" />
           </div>
 
@@ -102,8 +87,8 @@ function InventorySummary() {
           </div>
         </div>
 
-        <div className="flex-1 bg-white rounded-xl py-3 px-4">
-          <div className="flex justify-center items-center w-9 h-9 bg-secondary-30 rounded-lg mb-8">
+        <div className="flex flex-col flex-1 h-36 bg-white rounded-xl py-3 px-4">
+          <div className="flex justify-center items-center w-9 h-9 bg-secondary-30 rounded-lg mb-auto">
             <Icon name="Customers" width={20} height={20} />
           </div>
 
@@ -128,8 +113,8 @@ function InventorySummary() {
         </div>
       </div>
 
-      <div className="flex-1 bg-white rounded-xl p-5">
-        <div className="flex items-center justify-between">
+      <div className="flex-1 bg-white rounded-xl py-5">
+        <div className="flex items-center justify-between px-5">
           <h2 className="text-black-60">Inventory Items</h2>
 
           <div className="flex h-8">
@@ -149,9 +134,7 @@ function InventorySummary() {
 
               <ActionButton iconName="Date">Filter</ActionButton>
 
-              <ActionButton iconName="Share">Share</ActionButton>
-
-              <button className="flex items-center rounded-[4px] border border-black-50 px-2">
+              <button className="min-w-[102px] flex items-center rounded-[4px] border border-black-50 px-2">
                 <span className="text-label-2 mr-2">Bulk Action</span>
                 <ArrowDown width={16} height={16} color="#5E6366" />
               </button>
@@ -160,15 +143,15 @@ function InventorySummary() {
         </div>
 
         <table className="w-full mt-5">
-          <thead className="border-[#E1E2E9] border-t border-b">
-            <th>
+          <thead className="px-5">
+            <th className="py-4 px-5 border-[#E1E2E9] border-t border-b">
               <div
                 className="w-6 h-6 rounded-lg border border-[#CFD3D4] cursor-pointer"
                 onClick={() => console.log('SELECT ALL TODO')}
               />
             </th>
 
-            <th>
+            <th className="py-4 px-5 border-[#E1E2E9] border-t border-b">
               <div className="opacity-0 cursor-default">Img</div>
             </th>
             <TableHead>Product Name</TableHead>
@@ -194,7 +177,7 @@ function InventorySummary() {
               } = product
 
               return (
-                <tr key={id}>
+                <tr key={id} className="hover:bg-neutral-50">
                   <TableData>
                     <div
                       className="w-6 h-6 rounded-lg border border-[#CFD3D4] cursor-pointer"
@@ -238,24 +221,18 @@ function InventorySummary() {
 
                   <TableData>
                     {status !== 'Expired' && (
-                      <div className="flex w-fit bg-[#5e636614] py-1 px-3 rounded-md text-paragraph-2 text-black-30 cursor-pointer">
+                      <button className="flex w-fit bg-[#5e636614] py-1 px-3 rounded-md text-paragraph-2 text-black-30 cursor-pointer">
                         <span className="mr-1">
                           {status.substring(0, status.length - 2)}
                         </span>
 
                         <ArrowDown width={16} height={16} color="#5E6366" />
-                      </div>
+                      </button>
                     )}
                   </TableData>
 
                   <TableData>
-                    <span
-                      className={`text-paragraph-2 py-1 px-3 rounded-md ${getColorsForStatus(
-                        status
-                      )}`}
-                    >
-                      {status}
-                    </span>
+                    <ProductStatus status={status} />
                   </TableData>
                 </tr>
               )

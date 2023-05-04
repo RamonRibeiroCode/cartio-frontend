@@ -29,6 +29,30 @@ export const PRODUCTS = gql`
   }
 `
 
+export interface ProductQuery {
+  product: Product
+}
+
+export const PRODUCT = gql`
+  query PRODUCT($id: String!) {
+    product(id: $id) {
+      id
+      categoryId
+      expiresIn
+      listPrice
+      name
+      sellingPrice
+      quantity
+      slug
+      status
+      validIn
+      mainImageUrl
+      additionalImageUrls
+      createdAt
+    }
+  }
+`
+
 export interface CategoriesQuery {
   categories: Category[]
 }

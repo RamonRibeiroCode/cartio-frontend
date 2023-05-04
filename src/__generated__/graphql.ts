@@ -24,7 +24,7 @@ export type Category = {
 };
 
 export type CreateProductInput = {
-  additionalImages?: InputMaybe<Scalars['Upload']>;
+  additionalImages?: InputMaybe<Array<Scalars['Upload']>>;
   categoryId?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   expiresIn?: InputMaybe<Scalars['DateTime']>;
@@ -87,11 +87,14 @@ export type MutationUpdateUserArgs = {
 
 export type Product = {
   __typename?: 'Product';
+  additionalImageUrls: Array<Scalars['String']>;
   category: Category;
   categoryId: Scalars['String'];
+  createdAt: Scalars['DateTime'];
   description?: Maybe<Scalars['String']>;
   expiresIn?: Maybe<Scalars['DateTime']>;
   id: Scalars['ID'];
+  imagesKeys: Array<Scalars['String']>;
   listPrice?: Maybe<Scalars['Float']>;
   mainImageKey?: Maybe<Scalars['String']>;
   mainImageUrl?: Maybe<Scalars['String']>;
@@ -106,9 +109,15 @@ export type Product = {
 export type Query = {
   __typename?: 'Query';
   categories: Array<Category>;
+  product: Product;
   products: Array<Product>;
   profile: UserWithoutPassword;
   sayHello: Scalars['String'];
+};
+
+
+export type QueryProductArgs = {
+  id: Scalars['String'];
 };
 
 export type SigninResponse = {
